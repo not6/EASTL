@@ -1563,7 +1563,7 @@ typedef EASTL_SSIZE_T eastl_ssize_t; // Signed version of eastl_size_t. Concept 
 // Identifies the minimum alignment that EASTL should assume system allocations
 // from malloc and new will have.
 #if !defined(EASTL_SYSTEM_ALLOCATOR_MIN_ALIGNMENT)
-	#if defined(EA_PLATFORM_MICROSOFT) || defined(EA_PLATFORM_APPLE)
+	#if /*defined(EA_PLATFORM_MICROSOFT) ||*/ defined(EA_PLATFORM_APPLE)
 		#define EASTL_SYSTEM_ALLOCATOR_MIN_ALIGNMENT 16
 	#else
 		#define EASTL_SYSTEM_ALLOCATOR_MIN_ALIGNMENT (EA_PLATFORM_PTR_SIZE * 2)

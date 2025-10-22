@@ -8,7 +8,7 @@
 
 
 #include <EABase/eahave.h>
-#include <EASTL/allocator.h>
+//#include <EASTL/allocator.h>
 #include <stddef.h>
 
 
@@ -23,10 +23,10 @@
 // C11   aligned_alloc   http://linux.die.net/man/3/aligned_alloc
 // glibc memalign        http://linux.die.net/man/3/posix_memalign
 // Posix posix_memalign  http://pubs.opengroup.org/onlinepubs/000095399/functions/posix_memalign.html
-// VC++ _aligned_malloc  http://msdn.microsoft.com/en-us/library/8z34s9c6%28VS.80%29.aspx This is not suitable, since it has a limitation that you need to free via _aligned_free.
+// VC++ _aligned_malloc  http://msdn.microsoft.com/en-us/library/8z34s9c6%28VS.80%29.aspx
 //
 #if !defined EASTL_ALIGNED_MALLOC_AVAILABLE
-	#if defined(EA_PLATFORM_POSIX) && !defined(EA_PLATFORM_APPLE)
+	#if (defined(EA_PLATFORM_POSIX) && !defined(EA_PLATFORM_APPLE)) || defined(EA_PLATFORM_MICROSOFT)
 		// memalign is more consistently available than posix_memalign, though its location isn't consistent across 
 		// platforms and compiler libraries. Typically it's declared in one of three headers: stdlib.h, malloc.h, or malloc/malloc.h
 		#include <stdlib.h> // memalign, posix_memalign. 
@@ -89,13 +89,24 @@ namespace eastl
 			{ return false; }
 
 		void* allocate(size_t n, int /*flags*/ = 0)
-			{ return malloc(n); }
+		{
+			#if EASTL_ALIGNED_MALLOC_AVAILABLE && defined(EA_PLATFORM_MICROSOFT)
+				return _aligned_malloc(n, EASTL_SYSTEM_ALLOCATOR_MIN_ALIGNMENT);
+			#else
+				return malloc(n);
+			#endif
+		}
 
 		void* allocate(size_t n, size_t alignment, size_t alignmentOffset, int /*flags*/ = 0)
 		{ 
 			#if EASTL_ALIGNED_MALLOC_AVAILABLE
 				if((alignmentOffset % alignment) == 0) // We check for (offset % alignmnent == 0) instead of (offset == 0) because any block which is aligned on e.g. 64 also is aligned at an offset of 64 by definition. 
-					return memalign(alignment, n); // memalign is more consistently available than posix_memalign.
+					#if defined(EA_PLATFORM_MICROSOFT)
+						return _aligned_malloc(n, alignment);
+						/*else*/ return _aligned_offset_malloc(n, alignment, alignmentOffset);
+					#else
+						return memalign(alignment, n); // memalign is more consistently available than posix_memalign.
+					#endif
 			#else
 				if((alignment <= EASTL_SYSTEM_ALLOCATOR_MIN_ALIGNMENT) && ((alignmentOffset % alignment) == 0))
 					return malloc(n);
@@ -104,7 +115,13 @@ namespace eastl
 		}
 
 		void deallocate(void* p, size_t /*n*/)
-			{ free(p); }
+		{
+			#if EASTL_ALIGNED_MALLOC_AVAILABLE && defined(EA_PLATFORM_MICROSOFT)
+				_aligned_free(p);
+			#else
+				free(p);
+			#endif
+		}
 
 		const char* get_name() const
 			{ return "allocator_malloc"; }
