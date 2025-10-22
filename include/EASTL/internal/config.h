@@ -1217,6 +1217,14 @@ namespace eastl
 		#define EASTL_LIKELY(x)   (x)
 		#define EASTL_UNLIKELY(x) (x)
 	#endif
+	
+	#if defined(EA_COMPILER_CPP20_ENABLED)
+		#define EASTL_LIKELY_CPP20   [[likely]]
+		#define EASTL_UNLIKELY_CPP20 [[unlikely]]
+	#else
+		#define EASTL_LIKELY_CPP20
+		#define EASTL_UNLIKELY_CPP20
+	#endif
 #endif
 
 

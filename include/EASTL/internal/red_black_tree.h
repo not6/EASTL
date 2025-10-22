@@ -1291,7 +1291,7 @@ namespace eastl
 		// Find insertion position of the value. This will either be a position which 
 		// already contains the value, a position which is greater than the value or
 		// end(), which we treat like a position which is greater than the value.
-		while(EASTL_LIKELY(pCurrent)) // Do a walk down the tree.
+		while(EASTL_LIKELY(pCurrent)) EASTL_LIKELY_CPP20 // Do a walk down the tree.
 		{
 			bValueLessThanNode = compare(key, extractKey(static_cast<node_type*>(pCurrent)->mValue));
 			pLowerBound        = pCurrent;
@@ -1309,7 +1309,7 @@ namespace eastl
 
 		if(bValueLessThanNode) // If we ended up on the left side of the last parent node...
 		{
-			if(EASTL_LIKELY(pLowerBound != mAnchor.mpNodeLeft)) // If the tree was empty or if we otherwise need to insert at the very front of the tree...
+			if(EASTL_LIKELY(pLowerBound != mAnchor.mpNodeLeft)) EASTL_LIKELY_CPP20 // If the tree was empty or if we otherwise need to insert at the very front of the tree...
 			{
 				// At this point, pLowerBound points to a node which is > than value.
 				// Move it back by one, so that it points to a node which is <= value.
@@ -1815,7 +1815,7 @@ namespace eastl
 	rbtree<K, V, C, A, E, bM, bU>::erase(const_iterator first, const_iterator last)
 	{
 		// We expect that if the user means to clear the container, they will call clear.
-		if(EASTL_LIKELY((first.mpNode != mAnchor.mpNodeLeft) || (last.mpNode != &mAnchor))) // If (first != begin or last != end) ...
+		if(EASTL_LIKELY((first.mpNode != mAnchor.mpNodeLeft) || (last.mpNode != &mAnchor))) EASTL_LIKELY_CPP20 // If (first != begin or last != end) ...
 		{
 			// Basic implementation:
 			while(first != last)
@@ -1884,9 +1884,9 @@ namespace eastl
 		rbtree_node_base* pCurrent = mAnchor.mpNodeParent; // Start with the root node.
 		rbtree_node_base* pRangeEnd = &mAnchor;             // Set it to the container end for now.
 
-		while (EASTL_LIKELY(pCurrent)) // Do a walk down the tree.
+		while (EASTL_LIKELY(pCurrent)) EASTL_LIKELY_CPP20 // Do a walk down the tree.
 		{
-			if (EASTL_LIKELY(!compare(extractKey(static_cast<node_type*>(pCurrent)->mValue), key))) // If pCurrent is >= key...
+			if (EASTL_LIKELY(!compare(extractKey(static_cast<node_type*>(pCurrent)->mValue), key))) EASTL_LIKELY_CPP20 // If pCurrent is >= key...
 			{
 				pRangeEnd = pCurrent;
 				pCurrent = pCurrent->mpNodeLeft;
@@ -1898,7 +1898,7 @@ namespace eastl
 			}
 		}
 
-		if (EASTL_LIKELY((pRangeEnd != &mAnchor) && !compare(key, extractKey(static_cast<node_type*>(pRangeEnd)->mValue))))
+		if (EASTL_LIKELY((pRangeEnd != &mAnchor) && !compare(key, extractKey(static_cast<node_type*>(pRangeEnd)->mValue)))) EASTL_LIKELY_CPP20
 			return iterator(pRangeEnd);
 		return iterator(&mAnchor);
 	}
@@ -1922,9 +1922,9 @@ namespace eastl
 		rbtree_node_base* pCurrent  = mAnchor.mpNodeParent; // Start with the root node.
 		rbtree_node_base* pRangeEnd = &mAnchor;             // Set it to the container end for now.
 
-		while(EASTL_LIKELY(pCurrent)) // Do a walk down the tree.
+		while(EASTL_LIKELY(pCurrent)) EASTL_LIKELY_CPP20 // Do a walk down the tree.
 		{
-			if(EASTL_LIKELY(!compare2(extractKey(static_cast<node_type*>(pCurrent)->mValue), u))) // If pCurrent is >= u...
+			if(EASTL_LIKELY(!compare2(extractKey(static_cast<node_type*>(pCurrent)->mValue), u))) EASTL_LIKELY_CPP20 // If pCurrent is >= u...
 			{
 				pRangeEnd = pCurrent;
 				pCurrent  = pCurrent->mpNodeLeft;
@@ -1936,7 +1936,7 @@ namespace eastl
 			}
 		}
 
-		if(EASTL_LIKELY((pRangeEnd != &mAnchor) && !compare2(u, extractKey(static_cast<node_type*>(pRangeEnd)->mValue))))
+		if(EASTL_LIKELY((pRangeEnd != &mAnchor) && !compare2(u, extractKey(static_cast<node_type*>(pRangeEnd)->mValue)))) EASTL_LIKELY_CPP20
 			return iterator(pRangeEnd);
 		return iterator(&mAnchor);
 	}
@@ -1962,9 +1962,9 @@ namespace eastl
 		rbtree_node_base* pCurrent  = mAnchor.mpNodeParent; // Start with the root node.
 		rbtree_node_base* pRangeEnd = &mAnchor;             // Set it to the container end for now.
 
-		while(EASTL_LIKELY(pCurrent)) // Do a walk down the tree.
+		while(EASTL_LIKELY(pCurrent)) EASTL_LIKELY_CPP20 // Do a walk down the tree.
 		{
-			if(EASTL_LIKELY(!compare(extractKey(static_cast<node_type*>(pCurrent)->mValue), key))) // If pCurrent is >= key...
+			if(EASTL_LIKELY(!compare(extractKey(static_cast<node_type*>(pCurrent)->mValue), key))) EASTL_LIKELY_CPP20 // If pCurrent is >= key...
 			{
 				pRangeEnd = pCurrent;
 				pCurrent  = pCurrent->mpNodeLeft;
@@ -2000,9 +2000,9 @@ namespace eastl
 		rbtree_node_base* pCurrent  = mAnchor.mpNodeParent; // Start with the root node.
 		rbtree_node_base* pRangeEnd = &mAnchor;             // set it to the container end for now.
 
-		while(EASTL_LIKELY(pCurrent)) // Do a walk down the tree.
+		while(EASTL_LIKELY(pCurrent)) EASTL_LIKELY_CPP20 // Do a walk down the tree.
 		{
-			if(EASTL_LIKELY(compare(key, extractKey(static_cast<node_type*>(pCurrent)->mValue)))) // If key is < pCurrent...
+			if(EASTL_LIKELY(compare(key, extractKey(static_cast<node_type*>(pCurrent)->mValue)))) EASTL_LIKELY_CPP20 // If key is < pCurrent...
 			{
 				EASTL_VALIDATE_COMPARE(!compare(extractKey(static_cast<node_type*>(pCurrent)->mValue), key)); // Validate that the compare function is sane.
 				pRangeEnd = pCurrent;

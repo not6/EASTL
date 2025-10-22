@@ -961,7 +961,7 @@ namespace eastl
 	list<T, Allocator>::front()
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(static_cast<node_type*>(internalNode().mpNext) == &internalNode()))
+			if (EASTL_UNLIKELY(static_cast<node_type*>(internalNode().mpNext) == &internalNode())) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("list::front -- empty container");
 		#else
 			// We allow the user to reference an empty container.
@@ -976,7 +976,7 @@ namespace eastl
 	list<T, Allocator>::front() const
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(static_cast<node_type*>(internalNode().mpNext) == &internalNode()))
+			if (EASTL_UNLIKELY(static_cast<node_type*>(internalNode().mpNext) == &internalNode())) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("list::front -- empty container");
 		#else
 			// We allow the user to reference an empty container.
@@ -991,7 +991,7 @@ namespace eastl
 	list<T, Allocator>::back()
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(static_cast<node_type*>(internalNode().mpNext) == &internalNode()))
+			if (EASTL_UNLIKELY(static_cast<node_type*>(internalNode().mpNext) == &internalNode())) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("list::back -- empty container");
 		#else
 			// We allow the user to reference an empty container.
@@ -1006,7 +1006,7 @@ namespace eastl
 	list<T, Allocator>::back() const
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(static_cast<node_type*>(internalNode().mpNext) == &internalNode()))
+			if (EASTL_UNLIKELY(static_cast<node_type*>(internalNode().mpNext) == &internalNode())) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("list::back -- empty container");
 		#else
 			// We allow the user to reference an empty container.
@@ -1242,7 +1242,7 @@ namespace eastl
 	inline void list<T, Allocator>::pop_front()
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(static_cast<node_type*>(internalNode().mpNext) == &internalNode()))
+			if(EASTL_UNLIKELY(static_cast<node_type*>(internalNode().mpNext) == &internalNode())) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("list::pop_front -- empty container");
 		#endif
 
@@ -1293,7 +1293,7 @@ namespace eastl
 	inline void list<T, Allocator>::pop_back()
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(static_cast<node_type*>(internalNode().mpNext) == &internalNode()))
+			if(EASTL_UNLIKELY(static_cast<node_type*>(internalNode().mpNext) == &internalNode())) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("list::pop_back -- empty container");
 		#endif
 
@@ -1432,7 +1432,7 @@ namespace eastl
 
 		while(current.mpNode != &internalNode())
 		{
-			if(EASTL_LIKELY(!(*current == value)))
+			if(EASTL_LIKELY(!(*current == value))) EASTL_LIKELY_CPP20
 				++current; // We have duplicate '++current' statements here and below, but the logic here forces this.
 			else
 			{

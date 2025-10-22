@@ -1045,7 +1045,7 @@ namespace eastl
 	template <typename Allocator, typename Element, typename Container>
 	void bitvector<Allocator, Element, Container>::set(size_type n, bool value)
 	{
-		if(EASTL_UNLIKELY(n >= size()))
+		if(EASTL_UNLIKELY(n >= size())) EASTL_UNLIKELY_CPP20
 			resize(n + 1);
 
 		*(begin() + (difference_type)n) = value;
@@ -1061,10 +1061,10 @@ namespace eastl
 		// out_of_range exception.
 
 		#if EASTL_EXCEPTIONS_ENABLED
-			if(EASTL_UNLIKELY(n >= size()))
+			if(EASTL_UNLIKELY(n >= size())) EASTL_UNLIKELY_CPP20
 				throw std::out_of_range("bitvector::at -- out of range");
 		#elif EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(n >= size()))
+			if(EASTL_UNLIKELY(n >= size())) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("bitvector::at -- out of range");
 		#endif
 		
@@ -1077,10 +1077,10 @@ namespace eastl
 	bitvector<Allocator, Element, Container>::at(size_type n) const
 	{
 		#if EASTL_EXCEPTIONS_ENABLED
-			if(EASTL_UNLIKELY(n >= size()))
+			if(EASTL_UNLIKELY(n >= size())) EASTL_UNLIKELY_CPP20
 				throw std::out_of_range("bitvector::at -- out of range");
 		#elif EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(n >= size()))
+			if(EASTL_UNLIKELY(n >= size())) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("bitvector::at -- out of range");
 		#endif
 		
@@ -1185,7 +1185,7 @@ namespace eastl
 		iterator iPosition(position.get_reference_type()); // This is just a non-const version of position.
 
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(validate_iterator(iPosition) & eastl::isf_valid) == 0)
+			if(EASTL_UNLIKELY(validate_iterator(iPosition) & eastl::isf_valid) == 0) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("bitvector::insert -- invalid iterator");
 		#endif
 
@@ -1207,7 +1207,7 @@ namespace eastl
 		iterator iPosition(position.get_reference_type()); // This is just a non-const version of position.
 
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(validate_iterator(iPosition) & eastl::isf_valid) == 0)
+			if(EASTL_UNLIKELY(validate_iterator(iPosition) & eastl::isf_valid) == 0) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("bitvector::insert -- invalid iterator");
 		#endif
 
@@ -1264,7 +1264,7 @@ namespace eastl
 		iterator iPosition(position.get_reference_type()); // This is just a non-const version of position.
 
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(validate_iterator(iPosition) & eastl::isf_can_dereference) == 0)
+			if(EASTL_UNLIKELY(validate_iterator(iPosition) & eastl::isf_can_dereference) == 0) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("bitvector::erase -- invalid iterator");
 		#endif
 
@@ -1285,14 +1285,14 @@ namespace eastl
 		iterator iLast(last.get_reference_type());   // This is just a non-const version of last.
 
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(validate_iterator(iLast) & eastl::isf_valid) == 0)
+			if(EASTL_UNLIKELY(validate_iterator(iLast) & eastl::isf_valid) == 0) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("bitvector::erase -- invalid iterator");
 		#endif
 
 		if(!(iFirst == iLast))
 		{
 			#if EASTL_ASSERT_ENABLED
-				if(EASTL_UNLIKELY(validate_iterator(iFirst) & eastl::isf_can_dereference) == 0)
+				if(EASTL_UNLIKELY(validate_iterator(iFirst) & eastl::isf_can_dereference) == 0) EASTL_UNLIKELY_CPP20
 					EASTL_FAIL_MSG("bitvector::erase -- invalid iterator");
 			#endif
 
@@ -1302,7 +1302,7 @@ namespace eastl
 
 			// Verify that no reallocation occurred.
 			#if EASTL_ASSERT_ENABLED
-				if(EASTL_UNLIKELY(validate_iterator(iFirst) & eastl::isf_valid) == 0)
+				if(EASTL_UNLIKELY(validate_iterator(iFirst) & eastl::isf_valid) == 0) EASTL_UNLIKELY_CPP20
 					EASTL_FAIL_MSG("bitvector::erase -- invalid iterator");
 			#endif
 		}

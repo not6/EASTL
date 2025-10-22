@@ -95,10 +95,10 @@ namespace eastl
 		EA_CPP14_CONSTEXPR const_reference at(size_type pos) const
 		{
 			#if EASTL_EXCEPTIONS_ENABLED
-				if(EASTL_UNLIKELY(pos >= mnCount))
+				if(EASTL_UNLIKELY(pos >= mnCount)) EASTL_UNLIKELY_CPP20
 					throw std::out_of_range("string_view::at -- out of range");
 			#elif EASTL_ASSERT_ENABLED
-				if(EASTL_UNLIKELY(pos >= mnCount))
+				if(EASTL_UNLIKELY(pos >= mnCount)) EASTL_UNLIKELY_CPP20
 					EASTL_FAIL_MSG("string_view::at -- out of range");
 			#endif
 
@@ -141,10 +141,10 @@ namespace eastl
 		size_type copy(T* pDestination, size_type count, size_type pos = 0) const
 		{
 			#if EASTL_EXCEPTIONS_ENABLED
-				if(EASTL_UNLIKELY(pos > mnCount))
+				if(EASTL_UNLIKELY(pos > mnCount)) EASTL_UNLIKELY_CPP20
 					throw std::out_of_range("string_view::copy -- out of range");
 			#elif EASTL_ASSERT_ENABLED
-				if(EASTL_UNLIKELY(pos > mnCount))
+				if(EASTL_UNLIKELY(pos > mnCount)) EASTL_UNLIKELY_CPP20
 					EASTL_FAIL_MSG("string_view::copy -- out of range");
 			#endif
 
@@ -157,10 +157,10 @@ namespace eastl
 		EA_CPP14_CONSTEXPR basic_string_view substr(size_type pos = 0, size_type count = npos) const
 		{
 			#if EASTL_EXCEPTIONS_ENABLED
-				if(EASTL_UNLIKELY(pos > mnCount))
+				if(EASTL_UNLIKELY(pos > mnCount)) EASTL_UNLIKELY_CPP20
 					throw std::out_of_range("string_view::substr -- out of range");
 			#elif EASTL_ASSERT_ENABLED
-				if(EASTL_UNLIKELY(pos > mnCount))
+				if(EASTL_UNLIKELY(pos > mnCount)) EASTL_UNLIKELY_CPP20
 					EASTL_FAIL_MSG("string_view::substr -- out of range");
 			#endif
 
@@ -212,7 +212,7 @@ namespace eastl
 		EA_CPP14_CONSTEXPR size_type find(basic_string_view sw, size_type pos = 0) const EA_NOEXCEPT
 		{
 			auto* pEnd = mpBegin + mnCount;
-			if (EASTL_LIKELY(((npos - sw.size()) >= pos) && (pos + sw.size()) <= mnCount))
+			if (EASTL_LIKELY(((npos - sw.size()) >= pos) && (pos + sw.size()) <= mnCount)) EASTL_LIKELY_CPP20
 			{
 				const value_type* const pTemp = eastl::search(mpBegin + pos, pEnd, sw.data(), sw.data() + sw.size());
 
@@ -241,7 +241,7 @@ namespace eastl
 
 		EA_CPP14_CONSTEXPR size_type rfind(T c, size_type pos = npos) const EA_NOEXCEPT
 		{
-			if (EASTL_LIKELY(mnCount))
+			if (EASTL_LIKELY(mnCount)) EASTL_LIKELY_CPP20
 			{
 				const value_type* const pEnd = mpBegin + eastl::min_alt(mnCount - 1, pos) + 1;
 				const value_type* const pResult = CharTypeStringRFind(pEnd, mpBegin, c);
@@ -258,7 +258,7 @@ namespace eastl
 			// It is documented that npos is a valid value, though. We return npos and
 			// don't crash if postion is any invalid value.
 			//#if EASTL_ASSERT_ENABLED
-			//    if(EASTL_UNLIKELY((position != npos) && (position > (size_type)(mpEnd - mpBegin))))
+			//    if(EASTL_UNLIKELY((position != npos) && (position > (size_type)(mpEnd - mpBegin)))) EASTL_UNLIKELY_CPP20
 			//        EASTL_FAIL_MSG("basic_string::rfind -- invalid position");
 			//#endif
 
@@ -267,9 +267,9 @@ namespace eastl
 			// The standard seems to suggest that rfind doesn't act exactly the same as find in that input position
 			// can be > size and the return value can still be other than npos. Thus, if n == 0 then you can
 			// never return npos, unlike the case with find.
-			if (EASTL_LIKELY(n <= mnCount))
+			if (EASTL_LIKELY(n <= mnCount)) EASTL_LIKELY_CPP20
 			{
-				if (EASTL_LIKELY(n))
+				if (EASTL_LIKELY(n)) EASTL_LIKELY_CPP20
 				{
 					const const_iterator pEnd = mpBegin + eastl::min_alt(mnCount - n, pos) + n;
 					const const_iterator pResult = CharTypeStringRSearch(mpBegin, pEnd, s, s + n);
@@ -298,7 +298,7 @@ namespace eastl
 		EA_CPP14_CONSTEXPR size_type find_first_of(const T* s, size_type pos, size_type n) const
 		{
 			// If position is >= size, we return npos.
-			if (EASTL_LIKELY((pos < mnCount)))
+			if (EASTL_LIKELY((pos < mnCount))) EASTL_LIKELY_CPP20
 			{
 				const value_type* const pBegin = mpBegin + pos;
 				const value_type* const pEnd = mpBegin + mnCount;
@@ -325,7 +325,7 @@ namespace eastl
 		EA_CPP14_CONSTEXPR size_type find_last_of(const T* s, size_type pos, size_type n) const
 		{
 			// If n is zero or position is >= size, we return npos.
-			if (EASTL_LIKELY(mnCount))
+			if (EASTL_LIKELY(mnCount)) EASTL_LIKELY_CPP20
 			{
 				const value_type* const pEnd = mpBegin + eastl::min_alt(mnCount - 1, pos) + 1;
 				const value_type* const pResult = CharTypeStringRFindFirstOf(pEnd, mpBegin, s, s + n);
@@ -348,7 +348,7 @@ namespace eastl
 
 		EA_CPP14_CONSTEXPR size_type find_first_not_of(T c, size_type pos = 0) const EA_NOEXCEPT
 		{
-			if (EASTL_LIKELY(pos <= mnCount))
+			if (EASTL_LIKELY(pos <= mnCount)) EASTL_LIKELY_CPP20
 			{
 				const auto pEnd = mpBegin + mnCount;
 				// Todo: Possibly make a specialized version of CharTypeStringFindFirstNotOf(pBegin, pEnd, c).
@@ -362,7 +362,7 @@ namespace eastl
 
 		EA_CPP14_CONSTEXPR size_type find_first_not_of(const T* s, size_type pos, size_type n) const
 		{
-			if (EASTL_LIKELY(pos <= mnCount))
+			if (EASTL_LIKELY(pos <= mnCount)) EASTL_LIKELY_CPP20
 			{
 				const auto pEnd = mpBegin + mnCount;
 				const const_iterator pResult = CharTypeStringFindFirstNotOf(mpBegin + pos, pEnd, s, s + n);
@@ -385,7 +385,7 @@ namespace eastl
 
 		EA_CPP14_CONSTEXPR size_type find_last_not_of(T c, size_type pos = npos) const EA_NOEXCEPT
 		{
-			if (EASTL_LIKELY(mnCount))
+			if (EASTL_LIKELY(mnCount)) EASTL_LIKELY_CPP20
 			{
 				// Todo: Possibly make a specialized version of CharTypeStringRFindFirstNotOf(pBegin, pEnd, c).
 				const value_type* const pEnd = mpBegin + eastl::min_alt(mnCount - 1, pos) + 1;
@@ -399,7 +399,7 @@ namespace eastl
 
 		EA_CPP14_CONSTEXPR size_type find_last_not_of(const T* s, size_type pos, size_type n) const
 		{
-			if (EASTL_LIKELY(mnCount))
+			if (EASTL_LIKELY(mnCount)) EASTL_LIKELY_CPP20
 			{
 				const value_type* const pEnd = mpBegin + eastl::min_alt(mnCount - 1, pos) + 1;
 				const value_type* const pResult = CharTypeStringRFindFirstNotOf(pEnd, mpBegin, s, s + n);

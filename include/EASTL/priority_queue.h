@@ -313,7 +313,7 @@ namespace eastl
 	priority_queue<T, Container, Compare>::top() const
 	{
 #if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(c.empty()))
+		if (EASTL_UNLIKELY(c.empty())) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("priority_queue::top -- empty container");
 #endif
 
@@ -375,7 +375,7 @@ namespace eastl
 	inline void priority_queue<T, Container, Compare>::pop()
 	{
 #if EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(c.empty()))
+		if (EASTL_UNLIKELY(c.empty())) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("priority_queue::pop -- empty container");
 #endif
 
@@ -401,7 +401,7 @@ namespace eastl
 	inline void priority_queue<T, Container, Compare>::pop(value_type& value)
 	{
 #if EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(c.empty()))
+		if (EASTL_UNLIKELY(c.empty())) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("priority_queue::pop -- empty container");
 #endif
 
@@ -414,7 +414,7 @@ namespace eastl
 	inline void priority_queue<T, Container, Compare>::change(size_type n) // This function is not in the STL std::priority_queue.
 	{
 #if EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(n >= c.size()))
+		if (EASTL_UNLIKELY(n >= c.size())) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("priority_queue::change -- out of range");
 #endif
 
@@ -426,7 +426,7 @@ namespace eastl
 	inline void priority_queue<T, Container, Compare>::remove(size_type n) // This function is not in the STL std::priority_queue.
 	{
 #if EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(n >= c.size()))
+		if (EASTL_UNLIKELY(n >= c.size())) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("priority_queue::remove -- out of range");
 #endif
 

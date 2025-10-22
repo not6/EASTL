@@ -867,7 +867,7 @@ namespace eastl
 	slist<T, Allocator>::front()
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(internalNode().mpNext == NULL))
+			if(EASTL_UNLIKELY(internalNode().mpNext == NULL)) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("slist::front -- empty container");
 		#endif
 
@@ -882,7 +882,7 @@ namespace eastl
 	slist<T, Allocator>::front() const
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(internalNode().mpNext == NULL))
+			if(EASTL_UNLIKELY(internalNode().mpNext == NULL)) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("slist::front -- empty container");
 		#endif
 
@@ -933,7 +933,7 @@ namespace eastl
 	void slist<T, Allocator>::pop_front()
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(internalNode().mpNext == NULL))
+			if(EASTL_UNLIKELY(internalNode().mpNext == NULL)) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("slist::front -- empty container");
 		#endif
 

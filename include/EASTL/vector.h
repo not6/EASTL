@@ -497,7 +497,7 @@ namespace eastl
 	{
 		// If n is zero, then we allocate no memory and just return nullptr. 
 		// This is fine, as our default ctor initializes with NULL pointers. 
-		if(EASTL_LIKELY(n))
+		if(EASTL_LIKELY(n)) EASTL_LIKELY_CPP20
 		{
 			auto* p = (T*)allocate_memory(internalAllocator(), n * sizeof(T), EASTL_ALIGN_OF(T), 0);
 			EASTL_ASSERT_MSG(p != nullptr, "the behaviour of eastl::allocators that return nullptr is not defined.");
@@ -944,11 +944,11 @@ namespace eastl
 	vector<T, Allocator>::operator[](size_type n)
 	{
 	    #if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(n >= (static_cast<size_type>(mpEnd - mpBegin))))
+			if (EASTL_UNLIKELY(n >= (static_cast<size_type>(mpEnd - mpBegin)))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("vector::operator[] -- out of range");
 		#elif EASTL_ASSERT_ENABLED
 			// We allow the user to use a reference to v[0] of an empty container. But this was merely grandfathered in and ideally we shouldn't allow such access to [0].
-			if (EASTL_UNLIKELY((n != 0) && (n >= (static_cast<size_type>(mpEnd - mpBegin)))))
+			if (EASTL_UNLIKELY((n != 0) && (n >= (static_cast<size_type>(mpEnd - mpBegin))))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("vector::operator[] -- out of range");
 		#endif
 
@@ -961,11 +961,11 @@ namespace eastl
 	vector<T, Allocator>::operator[](size_type n) const
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(n >= (static_cast<size_type>(mpEnd - mpBegin))))
+			if (EASTL_UNLIKELY(n >= (static_cast<size_type>(mpEnd - mpBegin)))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("vector::operator[] -- out of range");
 		#elif EASTL_ASSERT_ENABLED
 			// We allow the user to use a reference to v[0] of an empty container. But this was merely grandfathered in and ideally we shouldn't allow such access to [0].
-			if (EASTL_UNLIKELY((n != 0) && (n >= (static_cast<size_type>(mpEnd - mpBegin)))))
+			if (EASTL_UNLIKELY((n != 0) && (n >= (static_cast<size_type>(mpEnd - mpBegin))))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("vector::operator[] -- out of range");
 		#endif
 
@@ -982,10 +982,10 @@ namespace eastl
 		// out_of_range exception.
 
 		#if EASTL_EXCEPTIONS_ENABLED
-			if(EASTL_UNLIKELY(n >= (static_cast<size_type>(mpEnd - mpBegin))))
+			if(EASTL_UNLIKELY(n >= (static_cast<size_type>(mpEnd - mpBegin)))) EASTL_UNLIKELY_CPP20
 				throw std::out_of_range("vector::at -- out of range");
 		#elif EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(n >= (static_cast<size_type>(mpEnd - mpBegin))))
+			if(EASTL_UNLIKELY(n >= (static_cast<size_type>(mpEnd - mpBegin)))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("vector::at -- out of range");
 		#endif
 
@@ -998,10 +998,10 @@ namespace eastl
 	vector<T, Allocator>::at(size_type n) const
 	{
 		#if EASTL_EXCEPTIONS_ENABLED
-			if(EASTL_UNLIKELY(n >= (static_cast<size_type>(mpEnd - mpBegin))))
+			if(EASTL_UNLIKELY(n >= (static_cast<size_type>(mpEnd - mpBegin)))) EASTL_UNLIKELY_CPP20
 				throw std::out_of_range("vector::at -- out of range");
 		#elif EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(n >= (static_cast<size_type>(mpEnd - mpBegin))))
+			if(EASTL_UNLIKELY(n >= (static_cast<size_type>(mpEnd - mpBegin)))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("vector::at -- out of range");
 		#endif
 
@@ -1014,7 +1014,7 @@ namespace eastl
 	vector<T, Allocator>::front()
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY((mpBegin == nullptr) || (mpEnd <= mpBegin))) // We don't allow the user to reference an empty container.
+			if (EASTL_UNLIKELY((mpBegin == nullptr) || (mpEnd <= mpBegin))) EASTL_UNLIKELY_CPP20 // We don't allow the user to reference an empty container.
 				EASTL_FAIL_MSG("vector::front -- empty vector");
 		#else
 			// We allow the user to reference an empty container.
@@ -1029,7 +1029,7 @@ namespace eastl
 	vector<T, Allocator>::front() const
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY((mpBegin == nullptr) || (mpEnd <= mpBegin))) // We don't allow the user to reference an empty container.
+			if (EASTL_UNLIKELY((mpBegin == nullptr) || (mpEnd <= mpBegin))) EASTL_UNLIKELY_CPP20 // We don't allow the user to reference an empty container.
 				EASTL_FAIL_MSG("vector::front -- empty vector");
 		#else
 			// We allow the user to reference an empty container.
@@ -1046,7 +1046,7 @@ namespace eastl
 		#if EASTL_ASSERT_ENABLED
 			// if mpEnd is nullptr the expression (mpEnd - 1) is undefined behaviour.
 			// any use of back() with an empty vector is thus conceptually wrong.
-			if (EASTL_UNLIKELY((mpBegin == nullptr) || (mpEnd <= mpBegin)))
+			if (EASTL_UNLIKELY((mpBegin == nullptr) || (mpEnd <= mpBegin))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("vector::back -- empty vector");
 		#endif
 
@@ -1061,7 +1061,7 @@ namespace eastl
 		#if EASTL_ASSERT_ENABLED
 			// if mpEnd is nullptr the expression (mpEnd - 1) is undefined behaviour.
 			// any use of back() with an empty vector is thus conceptually wrong.
-			if (EASTL_UNLIKELY((mpBegin == nullptr) || (mpEnd <= mpBegin)))
+			if (EASTL_UNLIKELY((mpBegin == nullptr) || (mpEnd <= mpBegin))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("vector::back -- empty vector");
 		#endif
 
@@ -1120,7 +1120,7 @@ namespace eastl
 	inline void vector<T, Allocator>::pop_back()
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(mpEnd <= mpBegin))
+			if(EASTL_UNLIKELY(mpEnd <= mpBegin)) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("vector::pop_back -- empty vector");
 		#endif
 
@@ -1171,7 +1171,7 @@ namespace eastl
 	vector<T, Allocator>::insert(const_iterator position, const value_type& value)
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY((position < mpBegin) || (position > mpEnd)))
+			if(EASTL_UNLIKELY((position < mpBegin) || (position > mpEnd))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("vector::insert -- invalid position");
 		#endif
 
@@ -1234,7 +1234,7 @@ namespace eastl
 	vector<T, Allocator>::erase(const_iterator position)
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY((position < mpBegin) || (position >= mpEnd)))
+			if(EASTL_UNLIKELY((position < mpBegin) || (position >= mpEnd))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("vector::erase -- invalid position");
 		#endif
 
@@ -1254,7 +1254,7 @@ namespace eastl
 	vector<T, Allocator>::erase(const_iterator first, const_iterator last)
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY((first < mpBegin) || (first > mpEnd) || (last < mpBegin) || (last > mpEnd) || (last < first)))
+			if(EASTL_UNLIKELY((first < mpBegin) || (first > mpEnd) || (last < mpBegin) || (last > mpEnd) || (last < first))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("vector::erase -- invalid position");
 		#endif
  
@@ -1274,7 +1274,7 @@ namespace eastl
 	vector<T, Allocator>::erase_unsorted(const_iterator position)
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY((position < mpBegin) || (position >= mpEnd)))
+			if(EASTL_UNLIKELY((position < mpBegin) || (position >= mpEnd))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("vector::erase -- invalid position");
 		#endif
 
@@ -1637,7 +1637,7 @@ namespace eastl
 	void vector<T, Allocator>::DoInsertFromIterator(const_iterator position, BidirectionalIterator first, BidirectionalIterator last, eastl::bidirectional_iterator_tag)
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY((position < mpBegin) || (position > mpEnd)))
+			if(EASTL_UNLIKELY((position < mpBegin) || (position > mpEnd))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("vector::insert -- invalid position");
 		#endif
 
@@ -1715,7 +1715,7 @@ namespace eastl
 	void vector<T, Allocator>::DoInsertValues(const_iterator position, size_type n, const value_type& value)
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY((position < mpBegin) || (position > mpEnd)))
+			if(EASTL_UNLIKELY((position < mpBegin) || (position > mpEnd))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("vector::insert -- invalid position");
 		#endif
 
@@ -1913,7 +1913,7 @@ namespace eastl
 		// this case value is potentially being modified.
 
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY((position < mpBegin) || (position > mpEnd)))
+			if(EASTL_UNLIKELY((position < mpBegin) || (position > mpEnd))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("vector::insert/emplace -- invalid position");
 		#endif
 

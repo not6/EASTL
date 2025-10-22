@@ -604,11 +604,11 @@ namespace eastl
 	void DequeBase<T, Allocator, kDequeSubarraySize>::set_allocator(const allocator_type& allocator)
 	{
 		// The only time you can set an allocator is with an empty unused container, such as right after construction.
-		if(EASTL_LIKELY(mAllocator != allocator))
+		if(EASTL_LIKELY(mAllocator != allocator)) EASTL_LIKELY_CPP20
 		{
 			// our deque implementation always has allocations for mpPtrArray. this set_allocator() is unlike other container's set_allocator() member function
 			// in that it actually frees allocations when assigning the allocator. this lack of consistency is unfortunate.
-			if(EASTL_LIKELY(mpPtrArray && (mItBegin.mpCurrent == mItEnd.mpCurrent))) // is the container empty?
+			if(EASTL_LIKELY(mpPtrArray && (mItBegin.mpCurrent == mItEnd.mpCurrent))) EASTL_LIKELY_CPP20 // is the container empty?
 			{
 				DoFreeSubarrays(mItBegin.mpCurrentArrayPtr, mItEnd.mpCurrentArrayPtr + 1);
 				DoFreePtrArray(mpPtrArray, mnPtrArraySize);
@@ -656,7 +656,7 @@ namespace eastl
 	T** DequeBase<T, Allocator, kDequeSubarraySize>::DoAllocatePtrArray(size_type n)
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(n >= 0x80000000))
+			if(EASTL_UNLIKELY(n >= 0x80000000)) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("deque::DoAllocatePtrArray -- improbably large request.");
 		#endif
 
@@ -696,7 +696,7 @@ namespace eastl
 			// There might be some free space (nCurrentAdditionalCapacity) at the front of the existing subarray.
 			const size_type nCurrentAdditionalCapacity = (size_type)(mItBegin.mpCurrent - mItBegin.mpBegin);
 
-			if(EASTL_UNLIKELY(nCurrentAdditionalCapacity < nAdditionalCapacity)) // If we need to grow downward into a new subarray...
+			if(EASTL_UNLIKELY(nCurrentAdditionalCapacity < nAdditionalCapacity)) EASTL_UNLIKELY_CPP20 // If we need to grow downward into a new subarray...
 			{
 				const difference_type nSubarrayIncrease = (difference_type)(((nAdditionalCapacity - nCurrentAdditionalCapacity) + kDequeSubarraySize - 1) / kDequeSubarraySize);
 				difference_type i;
@@ -727,7 +727,7 @@ namespace eastl
 		{
 			const size_type nCurrentAdditionalCapacity = (size_type)((mItEnd.mpEnd - 1) - mItEnd.mpCurrent);
 
-			if(EASTL_UNLIKELY(nCurrentAdditionalCapacity < nAdditionalCapacity)) // If we need to grow forward into a new subarray...
+			if(EASTL_UNLIKELY(nCurrentAdditionalCapacity < nAdditionalCapacity)) EASTL_UNLIKELY_CPP20 // If we need to grow forward into a new subarray...
 			{
 				const difference_type nSubarrayIncrease = (difference_type)(((nAdditionalCapacity - nCurrentAdditionalCapacity) + kDequeSubarraySize - 1) / kDequeSubarraySize);
 				difference_type i;
@@ -972,7 +972,7 @@ namespace eastl
 	typename DequeIterator<T, Pointer, Reference, kDequeSubarraySize>::this_type&
 	DequeIterator<T, Pointer, Reference, kDequeSubarraySize>::operator++()
 	{
-		if(EASTL_UNLIKELY(++mpCurrent == mpEnd))
+		if(EASTL_UNLIKELY(++mpCurrent == mpEnd)) EASTL_UNLIKELY_CPP20
 		{
 			mpBegin   = *++mpCurrentArrayPtr;
 			mpEnd     = mpBegin + kDequeSubarraySize;
@@ -996,7 +996,7 @@ namespace eastl
 	typename DequeIterator<T, Pointer, Reference, kDequeSubarraySize>::this_type&
 	DequeIterator<T, Pointer, Reference, kDequeSubarraySize>::operator--()
 	{
-		if(EASTL_UNLIKELY(mpCurrent == mpBegin))
+		if(EASTL_UNLIKELY(mpCurrent == mpBegin)) EASTL_UNLIKELY_CPP20
 		{
 			mpBegin   = *--mpCurrentArrayPtr;
 			mpEnd     = mpBegin + kDequeSubarraySize;
@@ -1545,11 +1545,11 @@ namespace eastl
 	deque<T, Allocator, kDequeSubarraySize>::operator[](size_type n)
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(n >= (size_type)(mItEnd - mItBegin)))
+			if (EASTL_UNLIKELY(n >= (size_type)(mItEnd - mItBegin))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("deque::operator[] -- out of range");
 		#elif EASTL_ASSERT_ENABLED
 			// We allow taking a reference to deque[0]
-			if (EASTL_UNLIKELY((n != 0) && n >= (size_type)(mItEnd - mItBegin)))
+			if (EASTL_UNLIKELY((n != 0) && n >= (size_type)(mItEnd - mItBegin))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("deque::operator[] -- out of range");
 		#endif
 
@@ -1568,11 +1568,11 @@ namespace eastl
 	deque<T, Allocator, kDequeSubarraySize>::operator[](size_type n) const
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(n >= (size_type)(mItEnd - mItBegin)))
+			if (EASTL_UNLIKELY(n >= (size_type)(mItEnd - mItBegin))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("deque::operator[] -- out of range");
 		#elif EASTL_ASSERT_ENABLED
 			// We allow the user to use a reference to deque[0] of an empty container.
-			if (EASTL_UNLIKELY((n != 0) && n >= (size_type)(mItEnd - mItBegin)))
+			if (EASTL_UNLIKELY((n != 0) && n >= (size_type)(mItEnd - mItBegin))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("deque::operator[] -- out of range");
 		#endif
 
@@ -1621,7 +1621,7 @@ namespace eastl
 	deque<T, Allocator, kDequeSubarraySize>::front()
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY((size_type)(mItEnd == mItBegin)))
+			if (EASTL_UNLIKELY((size_type)(mItEnd == mItBegin))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("deque::front -- empty deque");
 		#else
 			// We allow the user to reference an empty container.
@@ -1636,7 +1636,7 @@ namespace eastl
 	deque<T, Allocator, kDequeSubarraySize>::front() const
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY((size_type)(mItEnd == mItBegin)))
+			if (EASTL_UNLIKELY((size_type)(mItEnd == mItBegin))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("deque::front -- empty deque");
 		#else
 			// We allow the user to reference an empty container.
@@ -1653,7 +1653,7 @@ namespace eastl
 		#if EASTL_ASSERT_ENABLED
 			// Decrementing an iterator with an empty container will result in undefined behaviour.
 			// specifically: the iterator decrement will apply pointer arithmetic to a nullptr (depending on the situation either mpCurrentArrayPtr or mpBegin).
-			if (EASTL_UNLIKELY((size_type)(mItEnd == mItBegin)))
+			if (EASTL_UNLIKELY((size_type)(mItEnd == mItBegin))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("deque::back -- empty deque");
 		#endif
 
@@ -1668,7 +1668,7 @@ namespace eastl
 		#if EASTL_ASSERT_ENABLED
 			// Decrementing an iterator with an empty container will result in undefined behaviour.
 			// specifically: the iterator decrement will apply pointer arithmetic to a nullptr (depending on the situation either mpCurrentArrayPtr or mpBegin).
-			if (EASTL_UNLIKELY((size_type)(mItEnd == mItBegin)))
+			if (EASTL_UNLIKELY((size_type)(mItEnd == mItBegin))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("deque::back -- empty deque");
 		#endif
 
@@ -1726,7 +1726,7 @@ namespace eastl
 	void deque<T, Allocator, kDequeSubarraySize>::pop_front()
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY((size_type)(mItEnd == mItBegin)))
+			if(EASTL_UNLIKELY((size_type)(mItEnd == mItBegin))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("deque::pop_front -- empty deque");
 		#endif
 
@@ -1756,7 +1756,7 @@ namespace eastl
 	void deque<T, Allocator, kDequeSubarraySize>::pop_back()
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY((size_type)(mItEnd == mItBegin)))
+			if(EASTL_UNLIKELY((size_type)(mItEnd == mItBegin))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("deque::pop_back -- empty deque");
 		#endif
 
@@ -1787,12 +1787,12 @@ namespace eastl
 	typename deque<T, Allocator, kDequeSubarraySize>::iterator
 	deque<T, Allocator, kDequeSubarraySize>::emplace(const_iterator position, Args&&... args)
 	{
-		if(EASTL_UNLIKELY(position.mpCurrent == mItEnd.mpCurrent)) // If we are doing the same thing as push_back...
+		if(EASTL_UNLIKELY(position.mpCurrent == mItEnd.mpCurrent)) EASTL_UNLIKELY_CPP20 // If we are doing the same thing as push_back...
 		{
 			emplace_back(eastl::forward<Args>(args)...);
 			return iterator(mItEnd, typename iterator::Decrement()); // Unfortunately, we need to make an iterator here, as the above push_back is an operation that can invalidate existing iterators.
 		}
-		else if(EASTL_UNLIKELY(position.mpCurrent == mItBegin.mpCurrent)) // If we are doing the same thing as push_front...
+		else if(EASTL_UNLIKELY(position.mpCurrent == mItBegin.mpCurrent)) EASTL_UNLIKELY_CPP20 // If we are doing the same thing as push_front...
 		{
 			emplace_front(eastl::forward<Args>(args)...);
 			return mItBegin;
@@ -1805,7 +1805,7 @@ namespace eastl
 		#if EASTL_ASSERT_ENABLED
 			EASTL_ASSERT(!empty()); // The push_front and push_back calls below assume that we are non-empty. It turns out this is never called unless so.
 
-			if(EASTL_UNLIKELY(!(validate_iterator(itPosition) & isf_valid)))
+			if(EASTL_UNLIKELY(!(validate_iterator(itPosition) & isf_valid))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("deque::emplace -- invalid iterator");
 		#endif
 
@@ -1964,10 +1964,10 @@ namespace eastl
 	deque<T, Allocator, kDequeSubarraySize>::erase(const_iterator position)
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(!(validate_iterator(position) & isf_valid)))
+			if(EASTL_UNLIKELY(!(validate_iterator(position) & isf_valid))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("deque::erase -- invalid iterator");
 
-			if(EASTL_UNLIKELY(position == end()))
+			if(EASTL_UNLIKELY(position == end())) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("deque::erase -- end() iterator is an invalid iterator for erase");
 		#endif
 
@@ -1998,9 +1998,9 @@ namespace eastl
 		iterator itLast(last, typename iterator::FromConst());
 
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(!(validate_iterator(itFirst) & isf_valid)))
+			if(EASTL_UNLIKELY(!(validate_iterator(itFirst) & isf_valid))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("deque::erase -- invalid iterator");
-			if(EASTL_UNLIKELY(!(validate_iterator(itLast) & isf_valid)))
+			if(EASTL_UNLIKELY(!(validate_iterator(itLast) & isf_valid))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("deque::erase -- invalid iterator");
 		#endif
 
@@ -2397,7 +2397,7 @@ namespace eastl
 
 			return mItBegin;
 		}
-		else if(EASTL_UNLIKELY(position.mpCurrent == mItEnd.mpCurrent)) // If inserting at the end (i.e. appending)...
+		else if(EASTL_UNLIKELY(position.mpCurrent == mItEnd.mpCurrent)) EASTL_UNLIKELY_CPP20 // If inserting at the end (i.e. appending)...
 		{
 			const iterator itNewEnd(DoReallocSubarray(n, kSideBack)); // mItEnd to itNewEnd refers to memory that isn't initialized yet; so it's not truly a valid iterator. Or at least not a dereferencable one.
 			const iterator itFirstInserted(mItEnd);
@@ -2517,7 +2517,7 @@ namespace eastl
 	deque<T, Allocator, kDequeSubarraySize>::DoInsertValues(const_iterator position, size_type n, const value_type& value)
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(!(validate_iterator(position) & isf_valid)))
+			if(EASTL_UNLIKELY(!(validate_iterator(position) & isf_valid))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("deque::insert -- invalid iterator");
 		#endif
 
@@ -2547,7 +2547,7 @@ namespace eastl
 
 			return mItBegin;
 		}
-		else if(EASTL_UNLIKELY(position.mpCurrent == mItEnd.mpCurrent)) // If inserting at the end (i.e. appending)...
+		else if(EASTL_UNLIKELY(position.mpCurrent == mItEnd.mpCurrent)) EASTL_UNLIKELY_CPP20 // If inserting at the end (i.e. appending)...
 		{
 			const iterator itNewEnd(DoReallocSubarray(n, kSideBack));
 			const iterator itFirstInserted(mItEnd);

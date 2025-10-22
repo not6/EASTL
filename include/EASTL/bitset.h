@@ -1359,7 +1359,7 @@ EA_RESTORE_GCC_WARNING()
 	{
 		if(n) // to avoid a shift by kBitsPerWord, which is undefined
 		{
-			if(EASTL_UNLIKELY(n >= kBitsPerWord))   // parent expected to handle high bits and n >= 64
+			if(EASTL_UNLIKELY(n >= kBitsPerWord)) EASTL_UNLIKELY_CPP20   // parent expected to handle high bits and n >= 64
 			{
 				mWord[1] = mWord[0];
 				mWord[0] = 0;
@@ -1378,7 +1378,7 @@ EA_RESTORE_GCC_WARNING()
 	{
 		if(n) // to avoid a shift by kBitsPerWord, which is undefined
 		{
-			if(EASTL_UNLIKELY(n >= kBitsPerWord))   // parent expected to handle n >= 64
+			if(EASTL_UNLIKELY(n >= kBitsPerWord)) EASTL_UNLIKELY_CPP20   // parent expected to handle n >= 64
 			{
 				mWord[0] = mWord[1];
 				mWord[1] = 0;
@@ -1705,7 +1705,7 @@ EA_RESTORE_GCC_WARNING()
 	inline typename bitset<N, WordType>::this_type&
 	bitset<N, WordType>::operator<<=(size_type n)
 	{
-		if(EASTL_LIKELY((intptr_t)n < (intptr_t)N))
+		if(EASTL_LIKELY((intptr_t)n < (intptr_t)N)) EASTL_LIKELY_CPP20
 		{
 			EA_DISABLE_VC_WARNING(6313)
 			base_type::operator<<=(n);
@@ -1723,7 +1723,7 @@ EA_RESTORE_GCC_WARNING()
 	inline typename bitset<N, WordType>::this_type&
 	bitset<N, WordType>::operator>>=(size_type n)
 	{
-		if(EASTL_LIKELY(n < N))
+		if(EASTL_LIKELY(n < N)) EASTL_LIKELY_CPP20
 			base_type::operator>>=(n);
 		else
 			base_type::reset();
@@ -1751,7 +1751,7 @@ EA_RESTORE_GCC_WARNING()
 		else
 		{
 			#if EASTL_ASSERT_ENABLED
-				if(EASTL_UNLIKELY(!(i < N)))
+				if(EASTL_UNLIKELY(!(i < N))) EASTL_UNLIKELY_CPP20
 					EASTL_FAIL_MSG("bitset::set -- out of range");
 			#endif
 
@@ -1777,12 +1777,12 @@ EA_RESTORE_GCC_WARNING()
 	inline typename bitset<N, WordType>::this_type&
 	bitset<N, WordType>::reset(size_type i)
 	{
-		if(EASTL_LIKELY(i < N))
+		if(EASTL_LIKELY(i < N)) EASTL_LIKELY_CPP20
 			DoGetWord(i) &= ~(static_cast<word_type>(1) << (i & kBitsPerWordMask));
 		else
 		{
 			#if EASTL_ASSERT_ENABLED
-				if(EASTL_UNLIKELY(!(i < N)))
+				if(EASTL_UNLIKELY(!(i < N))) EASTL_UNLIKELY_CPP20
 					EASTL_FAIL_MSG("bitset::reset -- out of range");
 			#endif
 
@@ -1812,12 +1812,12 @@ EA_RESTORE_GCC_WARNING()
 	inline typename bitset<N, WordType>::this_type&
 	bitset<N, WordType>::flip(size_type i)
 	{
-		if(EASTL_LIKELY(i < N))
+		if(EASTL_LIKELY(i < N)) EASTL_LIKELY_CPP20
 			DoGetWord(i) ^= (static_cast<word_type>(1) << (i & kBitsPerWordMask));
 		else
 		{
 			#if EASTL_ASSERT_ENABLED
-				if(EASTL_UNLIKELY(!(i < N)))
+				if(EASTL_UNLIKELY(!(i < N))) EASTL_UNLIKELY_CPP20
 					EASTL_FAIL_MSG("bitset::flip -- out of range");
 			#endif
 
@@ -1842,7 +1842,7 @@ EA_RESTORE_GCC_WARNING()
 	bitset<N, WordType>::operator[](size_type i)
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(!(i < N)))
+			if(EASTL_UNLIKELY(!(i < N))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("bitset::operator[] -- out of range");
 		#endif
 
@@ -1854,7 +1854,7 @@ EA_RESTORE_GCC_WARNING()
 	inline bool bitset<N, WordType>::operator[](size_type i) const
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(!(i < N)))
+			if(EASTL_UNLIKELY(!(i < N))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("bitset::operator[] -- out of range");
 		#endif
 
@@ -1944,7 +1944,7 @@ EA_RESTORE_GCC_WARNING()
 	template <size_t N, typename WordType>
 	inline bool bitset<N, WordType>::test(size_type i) const
 	{
-		if(EASTL_UNLIKELY(i < N))
+		if(EASTL_UNLIKELY(i < N)) EASTL_UNLIKELY_CPP20
 			return (DoGetWord(i) & (static_cast<word_type>(1) << (i & kBitsPerWordMask))) != 0;
 
 		#if EASTL_ASSERT_ENABLED

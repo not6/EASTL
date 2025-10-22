@@ -364,7 +364,7 @@ namespace eastl
 	segmented_vector_iterator<T, Count, Allocator>::operator++()
 	{
 		++mCurrent;
-        if(EASTL_UNLIKELY(mCurrent == mEnd))
+        if(EASTL_UNLIKELY(mCurrent == mEnd)) EASTL_UNLIKELY_CPP20
         {
 			if (!(mSegment->mPrev & segment_type::kIsLastSegment))
 			{
@@ -423,7 +423,7 @@ namespace eastl
 	inline segmented_vector<T, Count, Allocator>& segmented_vector<T, Count, Allocator>::operator=(
 	    const segmented_vector& other)
 	{
-		if (EA_UNLIKELY(this == &other))
+		if (EASTL_UNLIKELY(this == &other)) EASTL_UNLIKELY_CPP20
 		{
 			return *this;
 		}
@@ -456,7 +456,7 @@ namespace eastl
 	inline segmented_vector<T, Count, Allocator>& segmented_vector<T, Count, Allocator>::operator=(
 	    segmented_vector&& other)
 	{
-		if (EA_UNLIKELY(this == &other))
+		if (EASTL_UNLIKELY(this == &other)) EASTL_UNLIKELY_CPP20
 		{
 			return *this;
 		}
@@ -583,7 +583,7 @@ namespace eastl
 	segmented_vector<T, Count, Allocator>::front() noexcept
 	{
 #if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(mFirstSegment == nullptr)) // We don't allow the user to reference an empty container.
+		if (EASTL_UNLIKELY(mFirstSegment == nullptr)) EASTL_UNLIKELY_CPP20 // We don't allow the user to reference an empty container.
 			EASTL_FAIL_MSG("segmented_vector::front -- empty container");
 #endif
 
@@ -595,7 +595,7 @@ namespace eastl
 	segmented_vector<T, Count, Allocator>::back() noexcept
 	{
 #if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(mLastSegment == nullptr)) // We don't allow the user to reference an empty container.
+		if (EASTL_UNLIKELY(mLastSegment == nullptr)) EASTL_UNLIKELY_CPP20 // We don't allow the user to reference an empty container.
 			EASTL_FAIL_MSG("segmented_vector::back -- empty container");
 #endif
 
@@ -703,7 +703,7 @@ namespace eastl
 	{
 		segment_type* lastSegment = mLastSegment;
         #if EASTL_ASSERT_ENABLED
-            if(EASTL_UNLIKELY(!lastSegment))
+            if(EASTL_UNLIKELY(!lastSegment)) EASTL_UNLIKELY_CPP20
                 EASTL_FAIL_MSG("segmented_vector::pop_back -- segmented vector is empty");
         #endif
 		--lastSegment->mSize;

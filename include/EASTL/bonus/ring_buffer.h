@@ -391,7 +391,7 @@ namespace eastl
 	typename ring_buffer_iterator<T, Pointer, Reference, Container>::this_type&
 	ring_buffer_iterator<T, Pointer, Reference, Container>::operator++()
 	{
-		if(EASTL_UNLIKELY(++mContainerIterator == mpContainer->end()))
+		if(EASTL_UNLIKELY(++mContainerIterator == mpContainer->end())) EASTL_UNLIKELY_CPP20
 			mContainerIterator = mpContainer->begin();
 		return *this;
 	}
@@ -402,7 +402,7 @@ namespace eastl
 	ring_buffer_iterator<T, Pointer, Reference, Container>::operator++(int)
 	{
 		const this_type temp(*this);
-		if(EASTL_UNLIKELY(++mContainerIterator == mpContainer->end()))
+		if(EASTL_UNLIKELY(++mContainerIterator == mpContainer->end())) EASTL_UNLIKELY_CPP20
 			mContainerIterator = mpContainer->begin();
 		return temp;
 	}
@@ -412,7 +412,7 @@ namespace eastl
 	typename ring_buffer_iterator<T, Pointer, Reference, Container>::this_type&
 	ring_buffer_iterator<T, Pointer, Reference, Container>::operator--()
 	{
-		if(EASTL_UNLIKELY(mContainerIterator == mpContainer->begin()))
+		if(EASTL_UNLIKELY(mContainerIterator == mpContainer->begin())) EASTL_UNLIKELY_CPP20
 			mContainerIterator = mpContainer->end();
 		--mContainerIterator;
 		return *this;
@@ -424,7 +424,7 @@ namespace eastl
 	ring_buffer_iterator<T, Pointer, Reference, Container>::operator--(int)
 	{
 		const this_type temp(*this);
-		if(EASTL_UNLIKELY(mContainerIterator == mpContainer->begin()))
+		if(EASTL_UNLIKELY(mContainerIterator == mpContainer->begin())) EASTL_UNLIKELY_CPP20
 			mContainerIterator = mpContainer->end();
 		--mContainerIterator;
 		return temp;
@@ -1068,7 +1068,7 @@ namespace eastl
 
 			while(n--)
 			{
-				if(EASTL_UNLIKELY(++mEnd == c.end()))
+				if(EASTL_UNLIKELY(++mEnd == c.end())) EASTL_UNLIKELY_CPP20
 					mEnd = c.begin();
 			}
 		}
@@ -1225,7 +1225,7 @@ namespace eastl
 	{
 		EASTL_ASSERT(mEnd != mBegin); // We assume that size() > 0 and thus that there is something to pop.
 
-		if(EASTL_UNLIKELY(mEnd == c.begin()))
+		if(EASTL_UNLIKELY(mEnd == c.begin())) EASTL_UNLIKELY_CPP20
 			mEnd = c.end();
 		--mEnd;
 		--mSize;
@@ -1235,12 +1235,12 @@ namespace eastl
 	template <typename T, typename Container, typename Allocator>
 	void ring_buffer<T, Container, Allocator>::push_front(const value_type& value)
 	{
-		if(EASTL_UNLIKELY(mBegin == c.begin()))
+		if(EASTL_UNLIKELY(mBegin == c.begin())) EASTL_UNLIKELY_CPP20
 			mBegin = c.end();
 
 		if(--mBegin == mEnd)
 		{
-			if(EASTL_UNLIKELY(mEnd == c.begin()))
+			if(EASTL_UNLIKELY(mEnd == c.begin())) EASTL_UNLIKELY_CPP20
 				mEnd = c.end();
 			--mEnd;
 		}
@@ -1255,12 +1255,12 @@ namespace eastl
 	typename ring_buffer<T, Container, Allocator>::reference
 	ring_buffer<T, Container, Allocator>::push_front()
 	{
-		if(EASTL_UNLIKELY(mBegin == c.begin()))
+		if(EASTL_UNLIKELY(mBegin == c.begin())) EASTL_UNLIKELY_CPP20
 			mBegin = c.end();
 
 		if(--mBegin == mEnd)
 		{
-			if(EASTL_UNLIKELY(mEnd == c.begin()))
+			if(EASTL_UNLIKELY(mEnd == c.begin())) EASTL_UNLIKELY_CPP20
 				mEnd = c.end();
 			--mEnd;
 		}

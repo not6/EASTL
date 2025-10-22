@@ -312,7 +312,7 @@ namespace eastl
 			{
 				typedef typename eastl::iterator_traits<ForwardIterator>::value_type value_type;
 
-				if (EASTL_UNLIKELY(first == last))
+				if (EASTL_UNLIKELY(first == last)) EASTL_UNLIKELY_CPP20
 					return dest;
 
 				auto count = (last - first);

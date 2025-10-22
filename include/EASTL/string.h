@@ -838,7 +838,7 @@ namespace eastl
 		: mPair(x.get_allocator())
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if (EASTL_UNLIKELY(position > x.internalLayout().GetSize())) // 21.4.2 p4
+			if (EASTL_UNLIKELY(position > x.internalLayout().GetSize())) EASTL_UNLIKELY_CPP20 // 21.4.2 p4
 			{
 				ThrowRangeException();
 				AllocateSelf();
@@ -1190,7 +1190,7 @@ namespace eastl
 	basic_string<T, Allocator>::operator[](size_type n) const
 	{
 		#if EASTL_ASSERT_ENABLED // We allow the user to reference the trailing 0 char without asserting. Perhaps we shouldn't.
-			if(EASTL_UNLIKELY(n > internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(n > internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("basic_string::operator[] -- out of range");
 		#endif
 
@@ -1203,7 +1203,7 @@ namespace eastl
 	basic_string<T, Allocator>::operator[](size_type n)
 	{
 		#if EASTL_ASSERT_ENABLED // We allow the user to reference the trailing 0 char without asserting. Perhaps we shouldn't.
-			if(EASTL_UNLIKELY(n > internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(n > internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("basic_string::operator[] -- out of range");
 		#endif
 
@@ -1356,7 +1356,7 @@ namespace eastl
 	void basic_string<T, Allocator>::reserve(size_type n)
 	{
 		#if EASTL_STRING_OPT_LENGTH_ERRORS
-			if(EASTL_UNLIKELY(n > max_size()))
+			if(EASTL_UNLIKELY(n > max_size())) EASTL_UNLIKELY_CPP20
 				ThrowLengthException();
 		#endif
 
@@ -1395,7 +1395,7 @@ namespace eastl
 		{
 			// In here the string is transition from heap->heap, heap->sso or sso->heap
 
-			if(EASTL_LIKELY(n))
+			if(EASTL_LIKELY(n)) EASTL_LIKELY_CPP20
 			{
 
 				if(n <= SSOLayout::SSO_CAPACITY)
@@ -1440,10 +1440,10 @@ namespace eastl
 	inline void basic_string<T, Allocator>::force_size(size_type n)
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY(n > capacity()))
+			if(EASTL_UNLIKELY(n > capacity())) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#elif EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(n > capacity()))
+			if(EASTL_UNLIKELY(n > capacity())) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("basic_string::force_size -- out of range");
 		#endif
 
@@ -1494,10 +1494,10 @@ namespace eastl
 	basic_string<T, Allocator>::at(size_type n) const
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY(n >= internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(n >= internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#elif EASTL_ASSERT_ENABLED                  // We assert if the user references the trailing 0 char.
-			if(EASTL_UNLIKELY(n >= internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(n >= internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("basic_string::at -- out of range");
 		#endif
 
@@ -1510,10 +1510,10 @@ namespace eastl
 	basic_string<T, Allocator>::at(size_type n)
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY(n >= internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(n >= internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#elif EASTL_ASSERT_ENABLED                  // We assert if the user references the trailing 0 char.
-			if(EASTL_UNLIKELY(n >= internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(n >= internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("basic_string::at -- out of range");
 		#endif
 
@@ -1526,7 +1526,7 @@ namespace eastl
 	basic_string<T, Allocator>::front()
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(internalLayout().GetSize() == 0)) // We assert if the user references the trailing 0 char.
+			if (EASTL_UNLIKELY(internalLayout().GetSize() == 0)) EASTL_UNLIKELY_CPP20 // We assert if the user references the trailing 0 char.
 				EASTL_FAIL_MSG("basic_string::front -- empty string");
 		#else
 			// We allow the user to reference the trailing 0 char without asserting.
@@ -1541,7 +1541,7 @@ namespace eastl
 	basic_string<T, Allocator>::front() const
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(internalLayout().GetSize() == 0)) // We assert if the user references the trailing 0 char.
+			if (EASTL_UNLIKELY(internalLayout().GetSize() == 0)) EASTL_UNLIKELY_CPP20 // We assert if the user references the trailing 0 char.
 				EASTL_FAIL_MSG("basic_string::front -- empty string");
 		#else
 			// We allow the user to reference the trailing 0 char without asserting.
@@ -1556,7 +1556,7 @@ namespace eastl
 	basic_string<T, Allocator>::back()
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(internalLayout().GetSize() == 0)) // We assert if the user references the trailing 0 char.
+			if (EASTL_UNLIKELY(internalLayout().GetSize() == 0)) EASTL_UNLIKELY_CPP20 // We assert if the user references the trailing 0 char.
 				EASTL_FAIL_MSG("basic_string::back -- empty string");
 		#else
 			// We allow the user to reference the trailing 0 char without asserting.
@@ -1571,7 +1571,7 @@ namespace eastl
 	basic_string<T, Allocator>::back() const
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(internalLayout().GetSize() == 0)) // We assert if the user references the trailing 0 char.
+			if (EASTL_UNLIKELY(internalLayout().GetSize() == 0)) EASTL_UNLIKELY_CPP20 // We assert if the user references the trailing 0 char.
 				EASTL_FAIL_MSG("basic_string::back -- empty string");
 		#else
 			// We allow the user to reference the trailing 0 char without asserting.
@@ -1614,7 +1614,7 @@ namespace eastl
 	inline basic_string<T, Allocator>& basic_string<T, Allocator>::append(const this_type& x, size_type position, size_type n)
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY(position >= x.internalLayout().GetSize())) // position must be < x.mpEnd, but position + n may be > mpEnd.
+			if(EASTL_UNLIKELY(position >= x.internalLayout().GetSize())) EASTL_UNLIKELY_CPP20 // position must be < x.mpEnd, but position + n may be > mpEnd.
 				ThrowRangeException();
 		#endif
 
@@ -1884,7 +1884,7 @@ namespace eastl
 	inline void basic_string<T, Allocator>::pop_back()
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(internalLayout().GetSize() <= 0))
+			if(EASTL_UNLIKELY(internalLayout().GetSize() <= 0)) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("basic_string::pop_back -- empty string");
 		#endif
 
@@ -1905,7 +1905,7 @@ namespace eastl
 	inline basic_string<T, Allocator>& basic_string<T, Allocator>::assign(const this_type& x, size_type position, size_type n)
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY(position > x.internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(position > x.internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#endif
 
@@ -2021,12 +2021,12 @@ namespace eastl
 	basic_string<T, Allocator>& basic_string<T, Allocator>::insert(size_type position, const this_type& x)
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY(position > internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(position > internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#endif
 
 		#if EASTL_STRING_OPT_LENGTH_ERRORS
-			if(EASTL_UNLIKELY(internalLayout().GetSize() > (max_size() - x.internalLayout().GetSize())))
+			if(EASTL_UNLIKELY(internalLayout().GetSize() > (max_size() - x.internalLayout().GetSize()))) EASTL_UNLIKELY_CPP20
 				ThrowLengthException();
 		#endif
 
@@ -2039,14 +2039,14 @@ namespace eastl
 	basic_string<T, Allocator>& basic_string<T, Allocator>::insert(size_type position, const this_type& x, size_type beg, size_type n)
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY((position > internalLayout().GetSize()) || (beg > x.internalLayout().GetSize())))
+			if(EASTL_UNLIKELY((position > internalLayout().GetSize()) || (beg > x.internalLayout().GetSize()))) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#endif
 
 		size_type nLength = eastl::min_alt(n, x.internalLayout().GetSize() - beg);
 
 		#if EASTL_STRING_OPT_LENGTH_ERRORS
-			if(EASTL_UNLIKELY(internalLayout().GetSize() > (max_size() - nLength)))
+			if(EASTL_UNLIKELY(internalLayout().GetSize() > (max_size() - nLength))) EASTL_UNLIKELY_CPP20
 				ThrowLengthException();
 		#endif
 
@@ -2059,12 +2059,12 @@ namespace eastl
 	basic_string<T, Allocator>& basic_string<T, Allocator>::insert(size_type position, const value_type* p, size_type n)
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY(position > internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(position > internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#endif
 
 		#if EASTL_STRING_OPT_LENGTH_ERRORS
-			if(EASTL_UNLIKELY(internalLayout().GetSize() > (max_size() - n)))
+			if(EASTL_UNLIKELY(internalLayout().GetSize() > (max_size() - n))) EASTL_UNLIKELY_CPP20
 				ThrowLengthException();
 		#endif
 
@@ -2077,14 +2077,14 @@ namespace eastl
 	basic_string<T, Allocator>& basic_string<T, Allocator>::insert(size_type position, const value_type* p)
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY(position > internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(position > internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#endif
 
 		size_type nLength = (size_type)CharStrlen(p);
 
 		#if EASTL_STRING_OPT_LENGTH_ERRORS
-			if(EASTL_UNLIKELY(internalLayout().GetSize() > (max_size() - nLength)))
+			if(EASTL_UNLIKELY(internalLayout().GetSize() > (max_size() - nLength))) EASTL_UNLIKELY_CPP20
 				ThrowLengthException();
 		#endif
 
@@ -2097,12 +2097,12 @@ namespace eastl
 	basic_string<T, Allocator>& basic_string<T, Allocator>::insert(size_type position, size_type n, value_type c)
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY(position > internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(position > internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#endif
 
 		#if EASTL_STRING_OPT_LENGTH_ERRORS
-			if(EASTL_UNLIKELY(internalLayout().GetSize() > (max_size() - n)))
+			if(EASTL_UNLIKELY(internalLayout().GetSize() > (max_size() - n))) EASTL_UNLIKELY_CPP20
 				ThrowLengthException();
 		#endif
 
@@ -2131,7 +2131,7 @@ namespace eastl
 		const difference_type nPosition = (p - internalLayout().BeginPtr()); // Save this because we might reallocate.
 
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY((p < internalLayout().BeginPtr()) || (p > internalLayout().EndPtr())))
+			if(EASTL_UNLIKELY((p < internalLayout().BeginPtr()) || (p > internalLayout().EndPtr()))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("basic_string::insert -- invalid position");
 		#endif
 
@@ -2211,7 +2211,7 @@ namespace eastl
 		const difference_type nPosition = (p - internalLayout().BeginPtr()); // Save this because we might reallocate.
 
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY((p < internalLayout().BeginPtr()) || (p > internalLayout().EndPtr())))
+			if(EASTL_UNLIKELY((p < internalLayout().BeginPtr()) || (p > internalLayout().EndPtr()))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("basic_string::insert -- invalid position");
 		#endif
 
@@ -2324,12 +2324,12 @@ namespace eastl
 	inline basic_string<T, Allocator>& basic_string<T, Allocator>::erase(size_type position, size_type n)
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY(position > internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(position > internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#endif
 
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(position > internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(position > internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("basic_string::erase -- invalid position");
 		#endif
 
@@ -2345,7 +2345,7 @@ namespace eastl
 	basic_string<T, Allocator>::erase(const_iterator p)
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY((p < internalLayout().BeginPtr()) || (p >= internalLayout().EndPtr())))
+			if(EASTL_UNLIKELY((p < internalLayout().BeginPtr()) || (p >= internalLayout().EndPtr()))) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("basic_string::erase -- invalid position");
 		#endif
 
@@ -2361,7 +2361,7 @@ namespace eastl
 	{
 		#if EASTL_ASSERT_ENABLED
 			if (EASTL_UNLIKELY((pBegin < internalLayout().BeginPtr()) || (pBegin > internalLayout().EndPtr()) ||
-							   (pEnd < internalLayout().BeginPtr()) || (pEnd > internalLayout().EndPtr()) || (pEnd < pBegin)))
+							   (pEnd < internalLayout().BeginPtr()) || (pEnd > internalLayout().EndPtr()) || (pEnd < pBegin))) EASTL_UNLIKELY_CPP20
 			    EASTL_FAIL_MSG("basic_string::erase -- invalid position");
 		#endif
 
@@ -2395,14 +2395,14 @@ namespace eastl
 	basic_string<T, Allocator>& basic_string<T, Allocator>::replace(size_type position, size_type n, const this_type& x)
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY(position > internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(position > internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#endif
 
 		const size_type nLength = eastl::min_alt(n, internalLayout().GetSize() - position);
 
 		#if EASTL_STRING_OPT_LENGTH_ERRORS
-			if(EASTL_UNLIKELY((internalLayout().GetSize() - nLength) >= (max_size() - x.internalLayout().GetSize())))
+			if(EASTL_UNLIKELY((internalLayout().GetSize() - nLength) >= (max_size() - x.internalLayout().GetSize()))) EASTL_UNLIKELY_CPP20
 				ThrowLengthException();
 		#endif
 
@@ -2414,7 +2414,7 @@ namespace eastl
 	basic_string<T, Allocator>& basic_string<T, Allocator>::replace(size_type pos1, size_type n1, const this_type& x, size_type pos2, size_type n2)
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-		if(EASTL_UNLIKELY((pos1 > internalLayout().GetSize()) || (pos2 > x.internalLayout().GetSize())))
+		if(EASTL_UNLIKELY((pos1 > internalLayout().GetSize()) || (pos2 > x.internalLayout().GetSize()))) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#endif
 
@@ -2422,7 +2422,7 @@ namespace eastl
 		const size_type nLength2 = eastl::min_alt(n2, x.internalLayout().GetSize() - pos2);
 
 		#if EASTL_STRING_OPT_LENGTH_ERRORS
-			if(EASTL_UNLIKELY((internalLayout().GetSize() - nLength1) >= (max_size() - nLength2)))
+			if(EASTL_UNLIKELY((internalLayout().GetSize() - nLength1) >= (max_size() - nLength2))) EASTL_UNLIKELY_CPP20
 				ThrowLengthException();
 		#endif
 
@@ -2434,14 +2434,14 @@ namespace eastl
 	basic_string<T, Allocator>& basic_string<T, Allocator>::replace(size_type position, size_type n1, const value_type* p, size_type n2)
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY(position > internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(position > internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#endif
 
 		const size_type nLength = eastl::min_alt(n1, internalLayout().GetSize() - position);
 
 		#if EASTL_STRING_OPT_LENGTH_ERRORS
-			if(EASTL_UNLIKELY((n2 > max_size()) || ((internalLayout().GetSize() - nLength) >= (max_size() - n2))))
+			if(EASTL_UNLIKELY((n2 > max_size()) || ((internalLayout().GetSize() - nLength) >= (max_size() - n2)))) EASTL_UNLIKELY_CPP20
 				ThrowLengthException();
 		#endif
 
@@ -2453,7 +2453,7 @@ namespace eastl
 	basic_string<T, Allocator>& basic_string<T, Allocator>::replace(size_type position, size_type n1, const value_type* p)
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY(position > internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(position > internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#endif
 
@@ -2461,7 +2461,7 @@ namespace eastl
 
 		#if EASTL_STRING_OPT_LENGTH_ERRORS
 			const size_type n2 = (size_type)CharStrlen(p);
-			if(EASTL_UNLIKELY((n2 > max_size()) || ((internalLayout().GetSize() - nLength) >= (max_size() - n2))))
+			if(EASTL_UNLIKELY((n2 > max_size()) || ((internalLayout().GetSize() - nLength) >= (max_size() - n2)))) EASTL_UNLIKELY_CPP20
 				ThrowLengthException();
 		#endif
 
@@ -2473,14 +2473,14 @@ namespace eastl
 	basic_string<T, Allocator>& basic_string<T, Allocator>::replace(size_type position, size_type n1, size_type n2, value_type c)
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY(position > internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(position > internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#endif
 
 		const size_type nLength = eastl::min_alt(n1, internalLayout().GetSize() - position);
 
 		#if EASTL_STRING_OPT_LENGTH_ERRORS
-			if(EASTL_UNLIKELY((n2 > max_size()) || (internalLayout().GetSize() - nLength) >= (max_size() - n2)))
+			if(EASTL_UNLIKELY((n2 > max_size()) || (internalLayout().GetSize() - nLength) >= (max_size() - n2))) EASTL_UNLIKELY_CPP20
 				ThrowLengthException();
 		#endif
 
@@ -2514,7 +2514,7 @@ namespace eastl
 	{
 		#if EASTL_ASSERT_ENABLED
 			if (EASTL_UNLIKELY((pBegin < internalLayout().BeginPtr()) || (pBegin > internalLayout().EndPtr()) ||
-							   (pEnd < internalLayout().BeginPtr()) || (pEnd > internalLayout().EndPtr()) || (pEnd < pBegin)))
+							   (pEnd < internalLayout().BeginPtr()) || (pEnd > internalLayout().EndPtr()) || (pEnd < pBegin))) EASTL_UNLIKELY_CPP20
 			    EASTL_FAIL_MSG("basic_string::replace -- invalid position");
 		#endif
 
@@ -2539,7 +2539,7 @@ namespace eastl
 	{
 		#if EASTL_ASSERT_ENABLED
 			if (EASTL_UNLIKELY((pBegin1 < internalLayout().BeginPtr()) || (pBegin1 > internalLayout().EndPtr()) ||
-							   (pEnd1 < internalLayout().BeginPtr()) || (pEnd1 > internalLayout().EndPtr()) || (pEnd1 < pBegin1)))
+							   (pEnd1 < internalLayout().BeginPtr()) || (pEnd1 > internalLayout().EndPtr()) || (pEnd1 < pBegin1))) EASTL_UNLIKELY_CPP20
 			    EASTL_FAIL_MSG("basic_string::replace -- invalid position");
 		#endif
 
@@ -2595,7 +2595,7 @@ namespace eastl
 	basic_string<T, Allocator>::copy(value_type* p, size_type n, size_type position) const
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY(position > internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(position > internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#endif
 
@@ -2647,11 +2647,11 @@ namespace eastl
 		// It is not clear what the requirements are for position, but since the C++ standard
 		// appears to be silent it is assumed for now that position can be any value.
 		//#if EASTL_ASSERT_ENABLED
-		//    if(EASTL_UNLIKELY(position > (size_type)(mpEnd - mpBegin)))
+		//    if(EASTL_UNLIKELY(position > (size_type)(mpEnd - mpBegin))) EASTL_UNLIKELY_CPP20
 		//        EASTL_FAIL_MSG("basic_string::find -- invalid position");
 		//#endif
 
-		if(EASTL_LIKELY(((npos - n) >= position) && (position + n) <= internalLayout().GetSize())) // If the range is valid...
+		if(EASTL_LIKELY(((npos - n) >= position) && (position + n) <= internalLayout().GetSize())) EASTL_LIKELY_CPP20 // If the range is valid...
 		{
 			const value_type* const pTemp = eastl::search(internalLayout().BeginPtr() + position, internalLayout().EndPtr(), p, p + n);
 
@@ -2669,11 +2669,11 @@ namespace eastl
 		// It is not clear what the requirements are for position, but since the C++ standard
 		// appears to be silent it is assumed for now that position can be any value.
 		//#if EASTL_ASSERT_ENABLED
-		//    if(EASTL_UNLIKELY(position > (size_type)(mpEnd - mpBegin)))
+		//    if(EASTL_UNLIKELY(position > (size_type)(mpEnd - mpBegin))) EASTL_UNLIKELY_CPP20
 		//        EASTL_FAIL_MSG("basic_string::find -- invalid position");
 		//#endif
 
-		if(EASTL_LIKELY(position < internalLayout().GetSize()))// If the position is valid...
+		if(EASTL_LIKELY(position < internalLayout().GetSize())) EASTL_LIKELY_CPP20 // If the position is valid...
 		{
 			const const_iterator pResult = eastl::find(internalLayout().BeginPtr() + position, internalLayout().EndPtr(), c);
 
@@ -2708,7 +2708,7 @@ namespace eastl
 		// It is documented that npos is a valid value, though. We return npos and
 		// don't crash if postion is any invalid value.
 		//#if EASTL_ASSERT_ENABLED
-		//    if(EASTL_UNLIKELY((position != npos) && (position > (size_type)(mpEnd - mpBegin))))
+		//    if(EASTL_UNLIKELY((position != npos) && (position > (size_type)(mpEnd - mpBegin)))) EASTL_UNLIKELY_CPP20
 		//        EASTL_FAIL_MSG("basic_string::rfind -- invalid position");
 		//#endif
 
@@ -2719,9 +2719,9 @@ namespace eastl
 		// never return npos, unlike the case with find.
 		const size_type nLength = internalLayout().GetSize();
 
-		if(EASTL_LIKELY(n <= nLength))
+		if(EASTL_LIKELY(n <= nLength)) EASTL_LIKELY_CPP20
 		{
-			if(EASTL_LIKELY(n))
+			if(EASTL_LIKELY(n)) EASTL_LIKELY_CPP20
 			{
 				const const_iterator pEnd    = internalLayout().BeginPtr() + eastl::min_alt(nLength - n, position) + n;
 				const const_iterator pResult = CharTypeStringRSearch(internalLayout().BeginPtr(), pEnd, p, p + n);
@@ -2743,7 +2743,7 @@ namespace eastl
 		// If n is zero or position is >= size, we return npos.
 		const size_type nLength = internalLayout().GetSize();
 
-		if(EASTL_LIKELY(nLength))
+		if(EASTL_LIKELY(nLength)) EASTL_LIKELY_CPP20
 		{
 			const value_type* const pEnd    = internalLayout().BeginPtr() + eastl::min_alt(nLength - 1, position) + 1;
 			const value_type* const pResult = CharTypeStringRFind(pEnd, internalLayout().BeginPtr(), c);
@@ -2776,7 +2776,7 @@ namespace eastl
 	basic_string<T, Allocator>::find_first_of(const value_type* p, size_type position, size_type n) const
 	{
 		// If position is >= size, we return npos.
-		if(EASTL_LIKELY((position < internalLayout().GetSize())))
+		if(EASTL_LIKELY((position < internalLayout().GetSize()))) EASTL_LIKELY_CPP20
 		{
 			const value_type* const pBegin = internalLayout().BeginPtr() + position;
 			const const_iterator pResult   = CharTypeStringFindFirstOf(pBegin, internalLayout().EndPtr(), p, p + n);
@@ -2819,7 +2819,7 @@ namespace eastl
 		// If n is zero or position is >= size, we return npos.
 		const size_type nLength = internalLayout().GetSize();
 
-		if(EASTL_LIKELY(nLength))
+		if(EASTL_LIKELY(nLength)) EASTL_LIKELY_CPP20
 		{
 			const value_type* const pEnd    = internalLayout().BeginPtr() + eastl::min_alt(nLength - 1, position) + 1;
 			const value_type* const pResult = CharTypeStringRFindFirstOf(pEnd, internalLayout().BeginPtr(), p, p + n);
@@ -2859,7 +2859,7 @@ namespace eastl
 	typename basic_string<T, Allocator>::size_type
 	basic_string<T, Allocator>::find_first_not_of(const value_type* p, size_type position, size_type n) const
 	{
-		if(EASTL_LIKELY(position <= internalLayout().GetSize()))
+		if(EASTL_LIKELY(position <= internalLayout().GetSize())) EASTL_LIKELY_CPP20
 		{
 			const const_iterator pResult =
 			    CharTypeStringFindFirstNotOf(internalLayout().BeginPtr() + position, internalLayout().EndPtr(), p, p + n);
@@ -2875,7 +2875,7 @@ namespace eastl
 	typename basic_string<T, Allocator>::size_type
 	basic_string<T, Allocator>::find_first_not_of(value_type c, size_type position) const EA_NOEXCEPT
 	{
-		if(EASTL_LIKELY(position <= internalLayout().GetSize()))
+		if(EASTL_LIKELY(position <= internalLayout().GetSize())) EASTL_LIKELY_CPP20
 		{
 			// Todo: Possibly make a specialized version of CharTypeStringFindFirstNotOf(pBegin, pEnd, c).
 			const const_iterator pResult =
@@ -2910,7 +2910,7 @@ namespace eastl
 	{
 		const size_type nLength = internalLayout().GetSize();
 
-		if(EASTL_LIKELY(nLength))
+		if(EASTL_LIKELY(nLength)) EASTL_LIKELY_CPP20
 		{
 			const value_type* const pEnd    = internalLayout().BeginPtr() + eastl::min_alt(nLength - 1, position) + 1;
 			const value_type* const pResult = CharTypeStringRFindFirstNotOf(pEnd, internalLayout().BeginPtr(), p, p + n);
@@ -2928,7 +2928,7 @@ namespace eastl
 	{
 		const size_type nLength = internalLayout().GetSize();
 
-		if(EASTL_LIKELY(nLength))
+		if(EASTL_LIKELY(nLength)) EASTL_LIKELY_CPP20
 		{
 			// Todo: Possibly make a specialized version of CharTypeStringRFindFirstNotOf(pBegin, pEnd, c).
 			const value_type* const pEnd    = internalLayout().BeginPtr() + eastl::min_alt(nLength - 1, position) + 1;
@@ -2945,10 +2945,10 @@ namespace eastl
 	inline basic_string<T, Allocator> basic_string<T, Allocator>::substr(size_type position, size_type n) const
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY(position > internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(position > internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#elif EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(position > internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(position > internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("basic_string::substr -- invalid position");
 		#endif
 
@@ -2971,7 +2971,7 @@ namespace eastl
 	inline int basic_string<T, Allocator>::compare(size_type pos1, size_type n1, const this_type& x) const
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY(pos1 > internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(pos1 > internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#endif
 
@@ -2987,7 +2987,7 @@ namespace eastl
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
 			if(EASTL_UNLIKELY((pos1 > (size_type)(internalLayout().EndPtr() - internalLayout().BeginPtr())) ||
-			                  (pos2 > (size_type)(x.internalLayout().EndPtr() - x.internalLayout().BeginPtr()))))
+			                  (pos2 > (size_type)(x.internalLayout().EndPtr() - x.internalLayout().BeginPtr())))) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#endif
 
@@ -3009,7 +3009,7 @@ namespace eastl
 	inline int basic_string<T, Allocator>::compare(size_type pos1, size_type n1, const value_type* p) const
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY(pos1 > internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(pos1 > internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#endif
 
@@ -3024,7 +3024,7 @@ namespace eastl
 	inline int basic_string<T, Allocator>::compare(size_type pos1, size_type n1, const value_type* p, size_type n2) const
 	{
 		#if EASTL_STRING_OPT_RANGE_ERRORS
-			if(EASTL_UNLIKELY(pos1 > internalLayout().GetSize()))
+			if(EASTL_UNLIKELY(pos1 > internalLayout().GetSize())) EASTL_UNLIKELY_CPP20
 				ThrowRangeException();
 		#endif
 
@@ -3241,7 +3241,7 @@ namespace eastl
 	void basic_string<T, Allocator>::RangeInitialize(const value_type* pBegin, const value_type* pEnd)
 	{
 		#if EASTL_STRING_OPT_ARGUMENT_ERRORS
-			if(EASTL_UNLIKELY(!pBegin && (pEnd < pBegin))) // 21.4.2 p7
+			if(EASTL_UNLIKELY(!pBegin && (pEnd < pBegin))) EASTL_UNLIKELY_CPP20 // 21.4.2 p7
 				ThrowInvalidArgumentException();
 		#endif
 
@@ -3258,7 +3258,7 @@ namespace eastl
 	inline void basic_string<T, Allocator>::RangeInitialize(const value_type* pBegin)
 	{
 		#if EASTL_STRING_OPT_ARGUMENT_ERRORS
-			if(EASTL_UNLIKELY(!pBegin))
+			if(EASTL_UNLIKELY(!pBegin)) EASTL_UNLIKELY_CPP20
 				ThrowInvalidArgumentException();
 		#endif
 
@@ -3296,7 +3296,7 @@ namespace eastl
 	{
 		#if EASTL_STRING_OPT_LENGTH_ERRORS
 			const size_type nRemainingSize = max_size() - currentCapacity;
-			if(EASTL_UNLIKELY((minimumGrowSize > nRemainingSize)))
+			if(EASTL_UNLIKELY((minimumGrowSize > nRemainingSize))) EASTL_UNLIKELY_CPP20
 			{
 				ThrowLengthException();
 			}
@@ -3319,12 +3319,12 @@ namespace eastl
 	void basic_string<T, Allocator>::AllocateSelf(size_type n)
 	{
 		#if EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(n >= 0x40000000))
+			if(EASTL_UNLIKELY(n >= 0x40000000)) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("basic_string::AllocateSelf -- improbably large request.");
 		#endif
 
 		#if EASTL_STRING_OPT_LENGTH_ERRORS
-			if(EASTL_UNLIKELY(n > max_size()))
+			if(EASTL_UNLIKELY(n > max_size())) EASTL_UNLIKELY_CPP20
 				ThrowLengthException();
 		#endif
 

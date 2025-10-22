@@ -175,7 +175,7 @@ struct TupleRecurser<>
 		void* ptr = capacity ? allocate_memory(vec.get_allocator(), offset, alignment, 0) : nullptr;
 
 	#if EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY((size_t)ptr & (alignment - 1)) != 0)
+		if (EASTL_UNLIKELY((size_t)ptr & (alignment - 1)) != 0) EASTL_UNLIKELY_CPP20
 		{
 			EASTL_FAIL_MSG("tuple_vector::DoAllocate -- memory not alignment at requested alignment");
 		}
@@ -608,7 +608,7 @@ public:
 	void assign(const_iterator first, const_iterator last)
 	{
 #if EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(!validate_iterator_pair(first, last)))
+		if (EASTL_UNLIKELY(!validate_iterator_pair(first, last))) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("tuple_vector::assign -- invalid iterator pair");
 #endif
 		size_type newNumElements = last - first;
@@ -645,7 +645,7 @@ public:
 	void assign(const value_tuple* first, const value_tuple* last)
 	{
 #if EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(first > last || first == nullptr || last == nullptr))
+		if (EASTL_UNLIKELY(first > last || first == nullptr || last == nullptr)) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("tuple_vector::assign from tuple array -- invalid ptrs");
 #endif
         size_type newNumElements = static_cast<size_type>(last - first);
@@ -716,7 +716,7 @@ public:
 	iterator emplace(const_iterator pos, Ts&&... args)
 	{
 #if EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(validate_iterator(pos) == isf_none))
+		if (EASTL_UNLIKELY(validate_iterator(pos) == isf_none)) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("tuple_vector::emplace -- invalid iterator");
 #endif
 		size_type firstIdx = pos - cbegin();
@@ -761,7 +761,7 @@ public:
 	iterator insert(const_iterator pos, size_type n, const Ts&... args)
 	{
 #if EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(validate_iterator(pos) == isf_none))
+		if (EASTL_UNLIKELY(validate_iterator(pos) == isf_none)) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("tuple_vector::insert -- invalid iterator");
 #endif
 		size_type firstIdx = pos - cbegin();
@@ -808,9 +808,9 @@ public:
 	iterator insert(const_iterator pos, const_iterator first, const_iterator last)
 	{
 #if EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(validate_iterator(pos) == isf_none))
+		if (EASTL_UNLIKELY(validate_iterator(pos) == isf_none)) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("tuple_vector::insert -- invalid iterator");
-		if (EASTL_UNLIKELY(!validate_iterator_pair(first, last)))
+		if (EASTL_UNLIKELY(!validate_iterator_pair(first, last))) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("tuple_vector::insert -- invalid iterator pair");
 #endif
 		size_type posIdx = pos - cbegin();
@@ -865,9 +865,9 @@ public:
 	iterator insert(const_iterator pos, const value_tuple* first, const value_tuple* last)
 	{
 #if EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(validate_iterator(pos) == isf_none))
+		if (EASTL_UNLIKELY(validate_iterator(pos) == isf_none)) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("tuple_vector::insert -- invalid iterator");
-		if (EASTL_UNLIKELY(first > last || first == nullptr || last == nullptr))
+		if (EASTL_UNLIKELY(first > last || first == nullptr || last == nullptr)) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("tuple_vector::insert -- invalid source pointers");
 #endif
 		size_type posIdx = pos - cbegin();
@@ -937,9 +937,9 @@ public:
 	iterator erase(const_iterator first, const_iterator last)
 	{
 #if EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(validate_iterator(first) == isf_none || validate_iterator(last) == isf_none))
+		if (EASTL_UNLIKELY(validate_iterator(first) == isf_none || validate_iterator(last) == isf_none)) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("tuple_vector::erase -- invalid iterator");
-		if (EASTL_UNLIKELY(!validate_iterator_pair(first, last)))
+		if (EASTL_UNLIKELY(!validate_iterator_pair(first, last))) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("tuple_vector::erase -- invalid iterator pair");
 #endif
 		if (first != last)
@@ -961,7 +961,7 @@ public:
 	iterator erase_unsorted(const_iterator pos)
 	{
 #if EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(validate_iterator(pos) == isf_none))
+		if (EASTL_UNLIKELY(validate_iterator(pos) == isf_none)) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("tuple_vector::erase_unsorted -- invalid iterator");
 #endif
 		size_type oldNumElements = mNumElements;
@@ -1037,7 +1037,7 @@ public:
 	void pop_back()
 	{
 #if EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(mNumElements <= 0))
+		if (EASTL_UNLIKELY(mNumElements <= 0)) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("tuple_vector::pop_back -- container is empty");
 #endif
 		size_type oldNumElements = mNumElements--;
@@ -1105,10 +1105,10 @@ public:
 	reference_tuple at(size_type n) 
 	{ 
 #if EASTL_EXCEPTIONS_ENABLED
-		if (EASTL_UNLIKELY(n >= mNumElements))
+		if (EASTL_UNLIKELY(n >= mNumElements)) EASTL_UNLIKELY_CPP20
 			throw std::out_of_range("tuple_vector::at -- out of range");
 #elif EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(n >= mNumElements))
+		if (EASTL_UNLIKELY(n >= mNumElements)) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("tuple_vector::at -- out of range");
 #endif
 		return reference_tuple(*(TupleVecLeaf<Indices, Ts>::mpData + n)...); 
@@ -1117,10 +1117,10 @@ public:
 	const_reference_tuple at(size_type n) const
 	{
 #if EASTL_EXCEPTIONS_ENABLED
-		if (EASTL_UNLIKELY(n >= mNumElements))
+		if (EASTL_UNLIKELY(n >= mNumElements)) EASTL_UNLIKELY_CPP20
 			throw std::out_of_range("tuple_vector::at -- out of range");
 #elif EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(n >= mNumElements))
+		if (EASTL_UNLIKELY(n >= mNumElements)) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("tuple_vector::at -- out of range");
 #endif
 		return const_reference_tuple(*(TupleVecLeaf<Indices, Ts>::mpData + n)...); 
@@ -1132,7 +1132,7 @@ public:
 	reference_tuple front() 
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(mNumElements == 0)) // We don't allow the user to reference an empty container.
+			if (EASTL_UNLIKELY(mNumElements == 0)) EASTL_UNLIKELY_CPP20 // We don't allow the user to reference an empty container.
 				EASTL_FAIL_MSG("tuple_vector::front -- empty vector");
 		#else
 			// We allow the user to reference an empty container.
@@ -1144,7 +1144,7 @@ public:
 	const_reference_tuple front() const
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(mNumElements == 0)) // We don't allow the user to reference an empty container.
+			if (EASTL_UNLIKELY(mNumElements == 0)) EASTL_UNLIKELY_CPP20 // We don't allow the user to reference an empty container.
 				EASTL_FAIL_MSG("tuple_vector::front -- empty vector");
 		#else
 			// We allow the user to reference an empty container.
@@ -1156,7 +1156,7 @@ public:
 	reference_tuple back() 
 	{
 		#if EASTL_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(mNumElements == 0)) // We don't allow the user to reference an empty container.
+			if (EASTL_UNLIKELY(mNumElements == 0)) EASTL_UNLIKELY_CPP20 // We don't allow the user to reference an empty container.
 				EASTL_FAIL_MSG("tuple_vector::back -- empty vector");
 		#endif
 
@@ -1166,7 +1166,7 @@ public:
 	const_reference_tuple back() const 
 	{
 		#if EASTL_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(mNumElements == 0)) // We don't allow the user to reference an empty container.
+			if (EASTL_UNLIKELY(mNumElements == 0)) EASTL_UNLIKELY_CPP20 // We don't allow the user to reference an empty container.
 				EASTL_FAIL_MSG("tuple_vector::back -- empty vector");
 		#endif
 
@@ -1291,7 +1291,7 @@ protected:
 	void DoInitFromIterator(move_iterator<MoveIterBase> begin, move_iterator<MoveIterBase> end)
 	{
 #if EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(!validate_iterator_pair(begin.base(), end.base())))
+		if (EASTL_UNLIKELY(!validate_iterator_pair(begin.base(), end.base()))) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("tuple_vector::erase -- invalid iterator pair");
 #endif
 		size_type newNumElements = (size_type)(end - begin);
@@ -1308,7 +1308,7 @@ protected:
 	void DoInitFromIterator(const_iterator begin, const_iterator end)
 	{
 #if EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(!validate_iterator_pair(begin, end)))
+		if (EASTL_UNLIKELY(!validate_iterator_pair(begin, end))) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("tuple_vector::erase -- invalid iterator pair");
 #endif
 		size_type newNumElements = (size_type)(end - begin);
@@ -1341,7 +1341,7 @@ protected:
 	void DoInitFromTupleArray(const value_tuple* first, const value_tuple* last)
 	{
 #if EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(first > last || first == nullptr || last == nullptr))
+		if (EASTL_UNLIKELY(first > last || first == nullptr || last == nullptr)) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("tuple_vector::ctor from tuple array -- invalid ptrs");
 #endif
 		size_type newNumElements = static_cast<size_type>(last - first);

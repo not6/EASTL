@@ -203,7 +203,7 @@ namespace eastl
 	stack<T, Container>::top()
 	{
 #if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(c.empty()))
+		if (EASTL_UNLIKELY(c.empty())) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("stack::top -- empty container");
 #endif
 
@@ -216,7 +216,7 @@ namespace eastl
 	stack<T, Container>::top() const
 	{
 #if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(c.empty()))
+		if (EASTL_UNLIKELY(c.empty())) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("stack::top -- empty container");
 #endif
 
@@ -258,7 +258,7 @@ namespace eastl
 	inline void stack<T, Container>::pop()
 	{
 #if EASTL_ASSERT_ENABLED
-		if (EASTL_UNLIKELY(c.empty()))
+		if (EASTL_UNLIKELY(c.empty())) EASTL_UNLIKELY_CPP20
 			EASTL_FAIL_MSG("stack::pop -- empty container");
 #endif
 

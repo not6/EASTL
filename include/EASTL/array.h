@@ -369,11 +369,11 @@ namespace eastl
 	array<T, N>::operator[](size_type i)
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(i >= N))
+			if (EASTL_UNLIKELY(i >= N)) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("array::operator[] -- out of range");
 		#elif EASTL_ASSERT_ENABLED
 			// We allow taking a reference to arr[0]
-			if (EASTL_UNLIKELY((i != 0) && i >= N))
+			if (EASTL_UNLIKELY((i != 0) && i >= N)) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("array::operator[] -- out of range");
 		#endif
 
@@ -386,11 +386,11 @@ namespace eastl
 	array<T, N>::operator[](size_type i) const
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(i >= N))
+			if (EASTL_UNLIKELY(i >= N)) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("array::operator[] -- out of range");
 		#elif EASTL_ASSERT_ENABLED
 			// We allow taking a reference to arr[0]
-			if (EASTL_UNLIKELY((i != 0) && i >= N))
+			if (EASTL_UNLIKELY((i != 0) && i >= N)) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("array::operator[] -- out of range");
 		#endif
 
@@ -448,10 +448,10 @@ namespace eastl
 	EA_CPP14_CONSTEXPR inline typename array<T, N>::const_reference array<T, N>::at(size_type i) const
 	{
 		#if EASTL_EXCEPTIONS_ENABLED
-			if(EASTL_UNLIKELY(i >= N))
+			if(EASTL_UNLIKELY(i >= N)) EASTL_UNLIKELY_CPP20
 				throw std::out_of_range("array::at -- out of range");
 		#elif EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(i >= N))
+			if(EASTL_UNLIKELY(i >= N)) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("array::at -- out of range");
 		#endif
 
@@ -463,10 +463,10 @@ namespace eastl
 	EA_CPP14_CONSTEXPR inline typename array<T, N>::reference array<T, N>::at(size_type i)
 	{
 		#if EASTL_EXCEPTIONS_ENABLED
-			if(EASTL_UNLIKELY(i >= N))
+			if(EASTL_UNLIKELY(i >= N)) EASTL_UNLIKELY_CPP20
 				throw std::out_of_range("array::at -- out of range");
 		#elif EASTL_ASSERT_ENABLED
-			if(EASTL_UNLIKELY(i >= N))
+			if(EASTL_UNLIKELY(i >= N)) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("array::at -- out of range");
 		#endif
 

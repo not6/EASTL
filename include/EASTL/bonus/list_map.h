@@ -628,7 +628,7 @@ namespace eastl
 	list_map<Key, T, Compare, Allocator>::front()
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(static_cast<internal_value_type*>(mNode.mpNext) == &mNode))
+			if (EASTL_UNLIKELY(static_cast<internal_value_type*>(mNode.mpNext) == &mNode)) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("list_map::front -- empty container");
 		#else
 			// We allow the user to reference an empty container.
@@ -642,7 +642,7 @@ namespace eastl
 	list_map<Key, T, Compare, Allocator>::front() const
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(static_cast<internal_value_type*>(mNode.mpNext) == &mNode))
+			if (EASTL_UNLIKELY(static_cast<internal_value_type*>(mNode.mpNext) == &mNode)) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("list_map::front -- empty container");
 		#else
 			// We allow the user to reference an empty container.
@@ -656,7 +656,7 @@ namespace eastl
 	list_map<Key, T, Compare, Allocator>::back()
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(static_cast<internal_value_type*>(mNode.mpNext) == &mNode))
+			if (EASTL_UNLIKELY(static_cast<internal_value_type*>(mNode.mpNext) == &mNode)) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("list_map::back -- empty container");
 		#else
 			// We allow the user to reference an empty container.
@@ -670,7 +670,7 @@ namespace eastl
 	list_map<Key, T, Compare, Allocator>::back() const
 	{
 		#if EASTL_ASSERT_ENABLED && EASTL_EMPTY_REFERENCE_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(static_cast<internal_value_type*>(mNode.mpNext) == &mNode))
+			if (EASTL_UNLIKELY(static_cast<internal_value_type*>(mNode.mpNext) == &mNode)) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("list_map::back -- empty container");
 		#else
 			// We allow the user to reference an empty container.
@@ -745,7 +745,7 @@ namespace eastl
 	void list_map<Key, T, Compare, Allocator>::pop_front()
 	{
 		#if EASTL_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(empty()))
+			if (EASTL_UNLIKELY(empty())) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("list_map::pop_front -- empty container");
 		#endif
 
@@ -756,7 +756,7 @@ namespace eastl
 	void list_map<Key, T, Compare, Allocator>::pop_back()
 	{
 		#if EASTL_ASSERT_ENABLED
-			if (EASTL_UNLIKELY(empty()))
+			if (EASTL_UNLIKELY(empty())) EASTL_UNLIKELY_CPP20
 				EASTL_FAIL_MSG("list_map::pop_back -- empty container");
 		#endif
 
