@@ -8,6 +8,7 @@
 
 
 #include <EASTL/internal/config.h>
+#include <EASTL/allocator_malloc.h>
 #include <EABase/nullptr.h>
 #include <stddef.h>
 
@@ -109,8 +110,8 @@ namespace eastl
 	/// Currently this Default Allocator applies only to CoreAllocatorAdapter.
 	/// To consider: This naming of this function is too similar to get_default_allocator
 	/// and instead should be named something like GetStaticDefaultAllocator.
-	EASTL_API allocator* GetDefaultAllocator();
-	EASTL_API allocator* SetDefaultAllocator(allocator* pAllocator);
+	EASTL_API EASTLAllocatorType* GetDefaultAllocator();
+	EASTL_API EASTLAllocatorType* SetDefaultAllocator(EASTLAllocatorType* pAllocator);
 
 
 	/// get_default_allocator
