@@ -35,6 +35,8 @@
 
 #if defined(EA_PLATFORM_MICROSOFT)
 	// Cannot include Windows headers in our headers, as they kill builds with their #defines.
+	// ... but I think we can include intrin.h
+	#include <intrin.h>
 #elif defined(EA_PLATFORM_POSIX)
 	#include <pthread.h>
 #endif
@@ -43,29 +45,6 @@
 // assignment operator could not be generated because a base class assignment operator is inaccessible or deleted.
 // non dll-interface class used as base for DLL-interface classkey 'identifier'.
 EA_DISABLE_VC_WARNING(4625 4626 4275);
-
-
-#if defined(EA_PLATFORM_MICROSOFT)
-	#if defined(EA_PROCESSOR_POWERPC)
-		extern "C" long  __stdcall _InterlockedIncrement(long volatile* Addend);
-		#pragma intrinsic (_InterlockedIncrement)
-
-		extern "C" long  __stdcall _InterlockedDecrement(long volatile* Addend);
-		#pragma intrinsic (_InterlockedDecrement)
-
-		extern "C" long  __stdcall _InterlockedCompareExchange(long volatile* Dest, long Exchange, long Comp);
-		#pragma intrinsic (_InterlockedCompareExchange)
-	#else
-		extern "C" long  _InterlockedIncrement(long volatile* Addend);
-		#pragma intrinsic (_InterlockedIncrement)
-
-		extern "C" long _InterlockedDecrement(long volatile* Addend);
-		#pragma intrinsic (_InterlockedDecrement)
-
-		extern "C" long _InterlockedCompareExchange(long volatile* Dest, long Exchange, long Comp);
-		#pragma intrinsic (_InterlockedCompareExchange)
-	#endif
-#endif
 
 
 
