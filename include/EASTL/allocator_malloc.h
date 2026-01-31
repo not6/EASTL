@@ -9,6 +9,7 @@
 
 #include <EABase/eahave.h>
 //#include <EASTL/allocator.h>
+#include <EASTL/internal/config.h>
 #include <stddef.h>
 
 

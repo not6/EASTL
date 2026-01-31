@@ -24,17 +24,17 @@
 
 		/// gDefaultAllocator
 		/// Default global allocator instance. 
-		EASTL_API EASTLAllocatorType   gDefaultAllocator;
-		EASTL_API EASTLAllocatorType* gpDefaultAllocator = &gDefaultAllocator;
+		EASTL_API allocator   gDefaultAllocator;
+		EASTL_API allocator* gpDefaultAllocator = &gDefaultAllocator;
 
-		EASTL_API EASTLAllocatorType* GetDefaultAllocator()
+		EASTL_API allocator* GetDefaultAllocator()
 		{
 			return gpDefaultAllocator;
 		}
 
-		EASTL_API EASTLAllocatorType* SetDefaultAllocator(EASTLAllocatorType* pAllocator)
+		EASTL_API allocator* SetDefaultAllocator(allocator* pAllocator)
 		{
-			EASTLAllocatorType* const pPrevAllocator = gpDefaultAllocator;
+			allocator* const pPrevAllocator = gpDefaultAllocator;
 			gpDefaultAllocator = pAllocator;
 			return pPrevAllocator;
 		}
