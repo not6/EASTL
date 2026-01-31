@@ -8,6 +8,9 @@
 
 
 #include <EASTL/internal/config.h>
+#ifdef EASTL_USER_ALLOCATOR_HEADER
+	#include EASTL_USER_ALLOCATOR_HEADER
+#endif
 #include <EABase/nullptr.h>
 #include <stddef.h>
 
