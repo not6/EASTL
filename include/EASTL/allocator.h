@@ -165,7 +165,7 @@ namespace eastl
 
 
 
-#ifndef EASTL_USER_DEFINED_ALLOCATOR // If the user hasn't declared that he has defined a different allocator implementation elsewhere...
+#ifndef EASTL_USER_DEFINED_ALLOCATOR // If the user hasn't declared that he has defined a different allocator implementation elsewhere... Also see EASTL_USER_ALLOCATOR_HEADER
 
 	EA_DISABLE_ALL_VC_WARNINGS()
 	#include <new>
